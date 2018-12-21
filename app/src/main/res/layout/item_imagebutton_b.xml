@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="180dp"
+    android:layout_height="130dp">
+
+    <ImageButton
+        android:background="#9c3030"
+        android:id="@+id/item_imagebutton_b_01"
+        android:layout_width="180dp"
+        android:layout_height="82dp" />
+
+    <Button
+        android:text="活动介绍"
+        android:textSize="8sp"
+        android:textColor="#000000"
+        android:background="#ffffff"
+        android:id="@+id/item_button_b_01"
+        android:layout_width="180dp"
+        android:layout_height="48dp" />
+
+</LinearLayout>

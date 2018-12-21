@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/advert_point_layout_01"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <View
+        android:background="@drawable/dot_normal"
+        android:id="@+id/advert_point_01"
+        android:layout_width="7dp"
+        android:layout_height="4dp"
+        />
+
+</LinearLayout>

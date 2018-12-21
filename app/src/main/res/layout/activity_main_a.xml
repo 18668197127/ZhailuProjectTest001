@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--这个是第一个主页面-->
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_a_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/main_a_title"
+        layout="@layout/title_zhailu_a"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/main_a_bottom"
+        layout="@layout/bottom_zhailu_a"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_a_viewpager_1"
+        android:layout_width="320dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_a_title" />
+
+    <LinearLayout
+        android:id="@+id/main_a_point_ll"
+        android:layout_width="34dp"
+        android:layout_height="4dp"
+        android:layout_marginStart="138dp"
+        android:layout_marginLeft="138dp"
+        android:layout_marginBottom="6dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/main_a_viewpager_1"
+        app:layout_constraintStart_toStartOf="@+id/main_a_viewpager_1" />
+
+    <include
+        android:id="@+id/main_a_item_imagebutton_1"
+        layout="@layout/item_imagebutton_a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        app:layout_constraintBottom_toTopOf="@+id/main_a_bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_a_title"
+        app:layout_constraintVertical_bias="0.425" />
+
+    <include
+        android:id="@+id/main_a_item_imagebutton_2"
+        layout="@layout/item_imagebutton_a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:layout_marginLeft="38dp"
+        app:layout_constraintBottom_toTopOf="@+id/main_a_bottom"
+        app:layout_constraintStart_toEndOf="@+id/main_a_item_imagebutton_1"
+        app:layout_constraintTop_toBottomOf="@+id/main_a_title"
+        app:layout_constraintVertical_bias="0.425"/>
+
+    <include
+        android:id="@+id/main_a_item_imagebutton_3"
+        layout="@layout/item_imagebutton_a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="38dp"
+        android:layout_marginRight="38dp"
+        app:layout_constraintBottom_toTopOf="@+id/main_a_bottom"
+        app:layout_constraintEnd_toStartOf="@+id/main_a_item_imagebutton_4"
+        app:layout_constraintTop_toBottomOf="@+id/main_a_title"
+        app:layout_constraintVertical_bias="0.425"/>
+
+    <include
+        android:id="@+id/main_a_item_imagebutton_4"
+        layout="@layout/item_imagebutton_a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="36dp"
+        android:layout_marginRight="36dp"
+        app:layout_constraintBottom_toTopOf="@+id/main_a_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_a_title"
+        app:layout_constraintVertical_bias="0.425"/>
+
+    <include
+        android:id="@+id/main_a_item_text_1"
+        layout="@layout/item_text_a"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_a_item_imagebutton_1" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/main_a_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_a_item_text_1"></android.support.v7.widget.RecyclerView>
+
+
+</android.support.constraint.ConstraintLayout>
