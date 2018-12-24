@@ -4,11 +4,30 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.administrator.zhailuprojecttest001.R;
+import com.example.administrator.zhailuprojecttest001.activity.OrderActivity;
+import com.example.administrator.zhailuprojecttest001.adapter.OrderListAdapter;
+import com.example.administrator.zhailuprojecttest001.gsonData2.Data2;
+import com.example.administrator.zhailuprojecttest001.gsonData2.Result2;
+import com.example.administrator.zhailuprojecttest001.retrofit.ZhailuData2;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,30 +38,35 @@ import com.example.administrator.zhailuprojecttest001.R;
  * create an instance of this fragment.
  */
 public class OrderFragment extends Fragment {
+
+    private static final String TAG = "OrderFragment";
+    
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "Data2";
+    private static final String ARG_PARAM2 = "processId";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
+   //这是两个从activity传过来的参数
+    private String mdata2;
+    private String mProcessId;
+
+    //这个是订单列表的子项数据
+    private List<Data2> data2List=new ArrayList<>();
+
+    //这个是fragment中网络请求的字符串
+    private String responseString;
+
+    //这个是回调接口声明
     private OnFragmentInteractionListener mListener;
 
+    //这个是无参构造
     public OrderFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment OrderFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+    //这个是工厂类创建fragment实例,可以传入两个参数
     public static OrderFragment newInstance(String param1, String param2) {
         OrderFragment fragment = new OrderFragment();
         Bundle args = new Bundle();
@@ -52,13 +76,17 @@ public class OrderFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mdata2 = getArguments().getString(ARG_PARAM1);
+            mProcessId = getArguments().getString(ARG_PARAM2);
         }
+//        System.out.println("Fragment1获取数据:"+data2);
+        //直接activity请求传过来的问题在于请求耗时,这样加载fragment会卡顿
+        retrofitGetData2();
     }
 
     @Override
@@ -68,7 +96,7 @@ public class OrderFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_order, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    //这个是回调方法的执行
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -102,8 +130,101 @@ public class OrderFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+
+    //这个是内部回调接口
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    //retrofit获取数据Data2,之后gson解析到Result成员变量中
+    public void retrofitGetData2() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://test.mouqukeji.com/api/v1/task/")
+                        .build();
+                ZhailuData2 zhailuData2=retrofit.create(ZhailuData2.class);
+                //test Path parameter
+//                Call<ResponseBody> call=zhailuData1.getZhailuData("Index");
+                //test no parameter
+                Call<ResponseBody> call=zhailuData2.getZhailuData("1");
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            responseString=response.body().string();
+                            Log.i(TAG, "onResponse测试: "+responseString);
+                            Gson gson=new Gson();
+                            Result2 result2=gson.fromJson(responseString,Result2.class);
+                            Log.i(TAG, "onResponse: 测试:"+result2.getData().get(0).getDelivery_time());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.i(TAG, "onResponse: "+t.toString());
+                    }
+                });
+            }
+        }).start();
+    }
+
+    public void initRecyclerData2(){
+
+        Gson gson=new Gson();
+        Result2 result2=gson.fromJson(responseString,Result2.class);
+        List<Data2> getdata2List=result2.getData();
+
+        //根据不同订单类型加载不同数据
+        if (mProcessId.equals("0")){
+            data2List=getdata2List;
+        }else if (mProcessId.equals("1")){
+            for (int i=0;i<getdata2List.size();i++){
+                if (getdata2List.get(i).getProgress().equals("1")){
+                    data2List.add(getdata2List.get(i));
+                }
+            }
+        }else if (mProcessId.equals("2")){
+            for (int i=0;i<getdata2List.size();i++){
+                if (getdata2List.get(i).getProgress().equals("2")){
+                    data2List.add(getdata2List.get(i));
+                }
+            }
+        }else if (mProcessId.equals("3+8")){
+            for (int i=0;i<getdata2List.size();i++){
+                if (getdata2List.get(i).getProgress().equals("3")||getdata2List.get(i).getProgress().equals("8")){
+                    data2List.add(getdata2List.get(i));
+                }
+            }
+        }else if (mProcessId.equals("4")){
+            for (int i=0;i<getdata2List.size();i++){
+                if (getdata2List.get(i).getProgress().equals("4")){
+                    data2List.add(getdata2List.get(i));
+                }
+            }
+        }else if (mProcessId.equals("5")){
+            for (int i=0;i<getdata2List.size();i++){
+                if (getdata2List.get(i).getProgress().equals("5")){
+                    data2List.add(getdata2List.get(i));
+                }
+            }
+        }else if (mProcessId.equals("6+7")){
+            for (int i=0;i<getdata2List.size();i++){
+                if (getdata2List.get(i).getProgress().equals("6")||getdata2List.get(i).getProgress().equals("7")){
+                    data2List.add(getdata2List.get(i));
+                }
+            }
+        }
+    }
+
+    public void initRecycler(){
+        RecyclerView recyclerView=getView().findViewById(R.id.order_recycler);
+        LinearLayoutManager manager=new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(manager);
+        OrderListAdapter orderListAdapter=new OrderListAdapter(getActivity(),data2List);
+        recyclerView.setAdapter(orderListAdapter);
     }
 }

@@ -31,6 +31,7 @@ import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.administrator.zhailuprojecttest001.activity.OrderActivity;
+import com.example.administrator.zhailuprojecttest001.activity.UserCenterActivity;
 import com.example.administrator.zhailuprojecttest001.adapter.NoticeBAdapter;
 import com.example.administrator.zhailuprojecttest001.adapter.AdvertAdapter;
 import com.example.administrator.zhailuprojecttest001.data.ActivityBData;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private Result result;
 
     private ImageButton imageButtonOrder;
+    private ImageButton imageButtonUserCenter;
 
 
 
@@ -112,20 +114,33 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         retrofitGetData();
 
+
+        //设置底部按钮的点击事件
         imageButtonOrder=findViewById(R.id.imagebutton_order);
         imageButtonOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,OrderActivity.class);
-                startActivity(intent);
+                Intent intent1=new Intent(MainActivity.this,OrderActivity.class);
+                startActivity(intent1);
+            }
+        });
+        imageButtonUserCenter=findViewById(R.id.imagebutton_me);
+        imageButtonUserCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2=new Intent(MainActivity.this,UserCenterActivity.class);
+                startActivity(intent2);
             }
         });
     }
 
+    //初始化主页面的活动
     private void initActivityBDataList(){
         activityBDataList.add(new ActivityBData(R.drawable.test_picture_001,"这是我们的第一个活动"));
         activityBDataList.add(new ActivityBData(R.drawable.test_picture_002,"这是我们的第二个活动"));
     }
+
+    //初始化广告的子view
     private void initImageButtonList(){
 //        for (int i=0;i<result.getData().getBanners().size();i++){
 //            View view1=  mInflater.inflate(R.layout.advert_01,null);
@@ -143,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         viewList.add(view2);
     }
 
+    //retrofit获取数据Data1,之后gson解析到Result成员变量中
     public void retrofitGetData() {
         new Thread(new Runnable() {
             @Override
@@ -185,6 +201,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         }).start();
     }
 
+    //将解析到的数据加载到布局中,图片加载用的是Glide
     public void showResponseResult(final Result result){
         runOnUiThread(new Runnable() {
             @Override
@@ -204,7 +221,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 //                    RequestOptions requestOptions=new RequestOptions();
                 }
                 for (int i=0;i<2;i++){
-                    ImageButton imageButton=findViewById(R.id.advert_layout_01+i).findViewById(R.id.advert_imagebutton_01+i);
+                    ImageButton imageButton=findViewById(R.id.advert_layout_01+i).findViewById(getResources().getIdentifier("advert_imagebutton_0"+(i+1), "id", getPackageName()));
+//                    Log.i(TAG, "run: "+getResources().getIdentifier("advert_imagebutton_0"+(i+1), "id", getPackageName()));
                     GlideApp.with(MainActivity.this).load(data.getBanners().get(i).getBanner()).into(imageButton);
                 }
                 for (int i=0;i<2;i++){
@@ -221,6 +239,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         });
     }
 
+    //这是广告Viewpager页面滑动的三个事件监听,设置了底下白色小点的动态效果
     @Override
     public void onPageScrolled(int i, float v, int i1) {
 
@@ -249,6 +268,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     }
 
+    //设置广告页面下方的白色小点
     public void setOvalLayout() {
         for (int i = 0; i < viewList.size(); i++) {
             LinearLayout point= (LinearLayout) mInflater.inflate(R.layout.advert_point, pointLl,false);
