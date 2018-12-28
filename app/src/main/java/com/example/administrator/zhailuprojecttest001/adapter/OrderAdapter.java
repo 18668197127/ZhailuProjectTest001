@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
+//订单Viewpager的适配器
 public class OrderAdapter extends FragmentPagerAdapter {
     private ArrayList<String> titleList;
     private ArrayList<Fragment> fragmentList;

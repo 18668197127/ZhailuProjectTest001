@@ -150,7 +150,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/button_order_cancel"
+        android:id="@+id/button_order_three"
         android:text="确认收货"
         android:textColor="#ffffff"
         android:textSize="12sp"

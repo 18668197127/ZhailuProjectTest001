@@ -10,5 +10,9 @@ public interface ZhailuData2 {
 
     //test Path parameter
     @GET("taskList")
+    Call<ResponseBody> getZhailuData(@Query("user_id")String id,@Query("progress")String progress);
+
+    //test Path parameter
+    @GET("taskList")
     Call<ResponseBody> getZhailuData(@Query("user_id")String id);
 }

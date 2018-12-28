@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background_order_item"
     android:layout_width="332dp"
-    android:layout_height="148dp">
+    android:layout_height="148dp"
+    android:background="@drawable/background_order_item">
 
     <View
         android:id="@+id/view5"
@@ -151,46 +150,47 @@
 
     <Button
         android:id="@+id/button_order_cancel"
-        android:text="取消订单"
-        android:textColor="#3E47BD"
-        android:textSize="12sp"
         android:layout_width="120dp"
         android:layout_height="32dp"
         android:background="@drawable/button_shape001"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="取消订单"
+        android:textColor="#3E47BD"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1415"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.879" />
+
     <Button
         android:id="@+id/button_order_pay"
-        android:text="去支付"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
         android:layout_width="120dp"
         android:layout_height="32dp"
         android:background="@drawable/button_shape002"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="去支付"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8584"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.879" />
 
     <TextView
         android:id="@+id/text_order_state"
-        android:paddingLeft="12dp"
-        android:paddingTop="3dp"
-        android:text="待支付 00:03:00"
-        android:textColor="#FFFFFF"
-        android:textSize="9sp"
         android:layout_width="90dp"
         android:layout_height="20dp"
         android:layout_marginTop="7dp"
         android:layout_marginEnd="1dp"
         android:layout_marginRight="1dp"
         android:background="@drawable/custom_shape"
+        android:paddingLeft="12dp"
+        android:paddingTop="3dp"
+        android:text="待支付 00:03:00"
+        android:textColor="#FFFFFF"
+        android:textSize="9sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

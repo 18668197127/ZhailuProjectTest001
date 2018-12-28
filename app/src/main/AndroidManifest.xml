@@ -15,15 +15,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.OrderActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.UserCenterActivity" android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.OrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.UserCenterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.PersonalActivity" />
+        <activity android:name=".activity.WalletActivity" />
+        <activity android:name=".walletItem.RechargeActivity" />
+        <activity android:name=".walletItem.ConsumeActivity" />
+        <activity android:name=".walletItem.CouponActivity"></activity>
     </application>
 
 </manifest>

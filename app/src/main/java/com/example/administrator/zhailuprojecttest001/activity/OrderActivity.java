@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import com.example.administrator.zhailuprojecttest001.MainActivity;
 import com.example.administrator.zhailuprojecttest001.R;
 import com.example.administrator.zhailuprojecttest001.adapter.OrderAdapter;
+import com.example.administrator.zhailuprojecttest001.adapter.OrderListAdapter;
 import com.example.administrator.zhailuprojecttest001.fragment.OrderFragment;
 import com.example.administrator.zhailuprojecttest001.gsonData1.Result;
 import com.example.administrator.zhailuprojecttest001.gsonData2.Data2;
@@ -48,11 +51,10 @@ public class OrderActivity extends AppCompatActivity implements OrderFragment.On
     private TabLayout tabLayout1;
 
     private String responseString="6";
-
-
     public String getResponseString() {
         return responseString;
     }
+    private Result2 result2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,8 +156,10 @@ public class OrderActivity extends AppCompatActivity implements OrderFragment.On
                             responseString=response.body().string();
                             Log.i(TAG, "onResponse测试: "+responseString);
                             Gson gson=new Gson();
-                            Result2 result2=gson.fromJson(responseString,Result2.class);
+                            result2=gson.fromJson(responseString,Result2.class);
                             Log.i(TAG, "onResponse: 测试:"+result2.getData().get(0).getDelivery_time());
+
+//                            initRecyclerView();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -168,6 +172,17 @@ public class OrderActivity extends AppCompatActivity implements OrderFragment.On
             }
         }).start();
     }
+
+
+//初始化RecyclerView,现在问题是不知道写在activity中还是fragment中,待考虑
+//    public void initRecyclerView(){
+//        OrderListAdapter orderListAdapter=new OrderListAdapter(OrderActivity.this,result2.getData());
+//        RecyclerView recyclerView=findViewById(R.id.order_recycler);
+//        LinearLayoutManager manager=new LinearLayoutManager(OrderActivity.this);
+//        manager.setOrientation(LinearLayoutManager.VERTICAL);
+//        recyclerView.setLayoutManager(manager);
+//        recyclerView.setAdapter(orderListAdapter);
+//    }
 
 
 }

@@ -46,5 +46,33 @@ public class UserCenterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        LinearLayout ll_5=findViewById(R.id.ll_list_5);
+        ll_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(UserCenterActivity.this,SettingsActivity.class);
+                startActivity(intent);
+
+            }
+        });
+        LinearLayout ll_1=findViewById(R.id.ll_list_1);
+        ll_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(UserCenterActivity.this,PersonalActivity.class);
+                startActivity(intent);
+
+            }
+        });
+        LinearLayout ll_2=findViewById(R.id.ll_list_2);
+        ll_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(UserCenterActivity.this,WalletActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 }

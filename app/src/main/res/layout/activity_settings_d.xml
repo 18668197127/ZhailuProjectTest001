@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SettingsActivity">
+
+    <include
+        android:id="@+id/layout_settings_title"
+        layout="@layout/title_zhailu_b"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+
+    <LinearLayout
+        android:background="#ffffff "
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="320dp">
+
+        <View
+            android:background="#fff5f5f5"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            />
+        <LinearLayout
+            android:id="@+id/ll_settings_list_1"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="46dp">
+
+            <TextView
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="10dp"
+                android:text="修改密码"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:background="@drawable/icon_settings_back2"
+                android:layout_marginLeft="264dp"
+                android:layout_marginTop="17dp"
+                android:layout_width="8dp"
+                android:layout_height="15dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_marginLeft="10dp"
+            android:background="#E7E7E7"
+            android:layout_width="340dp"
+            android:layout_height="1dp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_settings_list_2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="46dp">
+
+            <TextView
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="10dp"
+                android:text="手机号更改"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:background="@drawable/icon_settings_back2"
+                android:layout_marginLeft="250dp"
+                android:layout_marginTop="17dp"
+                android:layout_width="8dp"
+                android:layout_height="15dp" />
+
+        </LinearLayout>
+        <View
+            android:background="#fff5f5f5"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            />
+        <LinearLayout
+            android:id="@+id/ll_settings_list_3"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="46dp">
+
+            <TextView
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="10dp"
+                android:text="常见问题"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:background="@drawable/icon_settings_back2"
+                android:layout_marginLeft="264dp"
+                android:layout_marginTop="17dp"
+                android:layout_width="8dp"
+                android:layout_height="15dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_marginLeft="10dp"
+            android:background="#E7E7E7"
+            android:layout_width="340dp"
+            android:layout_height="1dp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_settings_list_4"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="46dp">
+
+            <TextView
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="10dp"
+                android:text="意见反馈"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:background="@drawable/icon_settings_back2"
+                android:layout_marginLeft="264dp"
+                android:layout_marginTop="17dp"
+                android:layout_width="8dp"
+                android:layout_height="15dp" />
+
+        </LinearLayout>
+        <View
+            android:background="#fff5f5f5"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            />
+        <LinearLayout
+            android:id="@+id/ll_settings_list_5"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="46dp">
+
+            <TextView
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="10dp"
+                android:text="关于宅鹿"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginTop="17dp"
+                android:layout_marginLeft="214dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="版本1.0.0"
+                android:textSize="12sp"
+                android:textColor="#898989"/>
+
+            <ImageView
+                android:background="@drawable/icon_settings_back2"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="17dp"
+                android:layout_width="8dp"
+                android:layout_height="15dp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/button_settings_quit"
+        android:text="退出当前帐号"
+        android:textSize="14sp"
+        android:textColor="#FFFFFF"
+        android:background="#4A56C7"
+        android:layout_width="236dp"
+        android:layout_height="45dp" />
+
+</LinearLayout>

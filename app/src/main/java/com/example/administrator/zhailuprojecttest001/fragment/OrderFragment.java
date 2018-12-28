@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.administrator.zhailuprojecttest001.R;
 import com.example.administrator.zhailuprojecttest001.activity.OrderActivity;
@@ -43,6 +44,8 @@ public class OrderFragment extends Fragment {
     
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+    //从activity传Data2放案暂时不可行,ARG_PARAM1暂时没用到
     private static final String ARG_PARAM1 = "Data2";
     private static final String ARG_PARAM2 = "processId";
 
@@ -56,7 +59,7 @@ public class OrderFragment extends Fragment {
     private List<Data2> data2List=new ArrayList<>();
 
     //这个是fragment中网络请求的字符串
-    private String responseString;
+    private String responseString="6";
 
     //这个是回调接口声明
     private OnFragmentInteractionListener mListener;
@@ -86,7 +89,8 @@ public class OrderFragment extends Fragment {
         }
 //        System.out.println("Fragment1获取数据:"+data2);
         //直接activity请求传过来的问题在于请求耗时,这样加载fragment会卡顿
-        retrofitGetData2();
+        //不知道网络请求放在哪个回调方法中好?待考虑
+//        retrofitGetData2();
     }
 
     @Override
@@ -94,6 +98,22 @@ public class OrderFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_order, container, false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (responseString.equals("6")){
+            retrofitGetData2();
+            Log.i(TAG, "onStart: 调用了网络请求"+mProcessId);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        responseString="6";
+        data2List.clear();
     }
 
     //这个是回调方法的执行
@@ -149,7 +169,7 @@ public class OrderFragment extends Fragment {
                 //test Path parameter
 //                Call<ResponseBody> call=zhailuData1.getZhailuData("Index");
                 //test no parameter
-                Call<ResponseBody> call=zhailuData2.getZhailuData("1");
+                Call<ResponseBody> call=zhailuData2.getZhailuData("1",mProcessId);
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -159,6 +179,10 @@ public class OrderFragment extends Fragment {
                             Gson gson=new Gson();
                             Result2 result2=gson.fromJson(responseString,Result2.class);
                             Log.i(TAG, "onResponse: 测试:"+result2.getData().get(0).getDelivery_time());
+
+                            initRecyclerData2();
+                            initRecycler();
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -179,6 +203,7 @@ public class OrderFragment extends Fragment {
         List<Data2> getdata2List=result2.getData();
 
         //根据不同订单类型加载不同数据
+        //前端的progress验证,防止后台数据出错,二次保证显示对应progress的子项
         if (mProcessId.equals("0")){
             data2List=getdata2List;
         }else if (mProcessId.equals("1")){
@@ -226,5 +251,10 @@ public class OrderFragment extends Fragment {
         recyclerView.setLayoutManager(manager);
         OrderListAdapter orderListAdapter=new OrderListAdapter(getActivity(),data2List);
         recyclerView.setAdapter(orderListAdapter);
+
+        //设置RecyclerView的显示和原先ll_no_order的隐藏
+        recyclerView.setVisibility(View.VISIBLE);
+        LinearLayout linearLayout=getView().findViewById(R.id.ll_no_order);
+        linearLayout.setVisibility(View.GONE);
     }
 }

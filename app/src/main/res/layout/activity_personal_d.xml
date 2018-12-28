@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.PersonalActivity">
+
+    <include
+        android:id="@+id/layout_personal_title"
+        layout="@layout/title_zhailu_b"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+
+    <LinearLayout
+        android:background="#ffffff "
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <LinearLayout
+            android:id="@+id/ll_settings_list_0"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="80dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:src="@drawable/test_picture_001"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="17dp"
+                android:layout_width="46dp"
+                android:layout_height="46dp" />
+            <TextView
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="38dp"
+                android:text="修改头像"
+                android:textSize="12sp"
+                android:textColor="#BABBBB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_marginLeft="10dp"
+            android:background="#E7E7E7"
+            android:layout_width="340dp"
+            android:layout_height="1dp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_settings_list_1"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="46dp">
+
+            <TextView
+                android:layout_marginTop="18dp"
+                android:layout_marginLeft="20dp"
+                android:text="昵称"
+                android:textColor="#646464"
+                android:textSize="13sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:text="何儿饭"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_marginLeft="10dp"
+            android:background="#E7E7E7"
+            android:layout_width="340dp"
+            android:layout_height="1dp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_settings_list_2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="46dp">
+
+            <TextView
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="20dp"
+                android:text="性别"
+                android:textColor="#646464"
+                android:textSize="13sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="260dp"
+                android:layout_marginTop="18sp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:text="女"/>
+
+            <ImageView
+                android:background="@drawable/icon_settings_back2"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="8dp"
+                android:layout_height="15dp" />
+
+        </LinearLayout>
+        <View
+            android:background="#fff5f5f5"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            />
+        <LinearLayout
+            android:id="@+id/ll_settings_list_3"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="46dp">
+
+            <TextView
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="20dp"
+                android:text="年龄"
+                android:textColor="#646464"
+                android:textSize="13sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="260dp"
+                android:layout_marginTop="18sp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:text="20"/>
+
+            <ImageView
+                android:background="@drawable/icon_settings_back2"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="8dp"
+                android:layout_height="15dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_marginLeft="10dp"
+            android:background="#E7E7E7"
+            android:layout_width="340dp"
+            android:layout_height="1dp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_settings_list_4"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="46dp">
+
+            <TextView
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="20dp"
+                android:text="所在学校"
+                android:textColor="#646464"
+                android:textSize="13sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="158dp"
+                android:layout_marginTop="18sp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:text="请选择所在学校"/>
+
+            <ImageView
+                android:background="@drawable/icon_settings_back2"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="8dp"
+                android:layout_height="15dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
