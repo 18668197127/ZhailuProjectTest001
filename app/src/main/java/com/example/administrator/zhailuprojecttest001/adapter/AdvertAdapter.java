@@ -5,6 +5,9 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+
+import com.example.administrator.zhailuprojecttest001.R;
 
 import java.util.List;
 

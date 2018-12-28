@@ -2,15 +2,13 @@ package com.example.administrator.zhailuprojecttest001.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.zhailuprojecttest001.R;
-import com.example.administrator.zhailuprojecttest001.data.ActivityBData;
 import com.example.administrator.zhailuprojecttest001.data.RechargeData;
 
 import java.util.List;
@@ -19,9 +17,9 @@ import java.util.List;
 //充值列表RecyclerView的适配器
 public class RechargeAdapter extends RecyclerView.Adapter<RechargeAdapter.ViewHolder>{
 
+    private static final String TAG = "RechargeAdapter";
+
     private List<RechargeData> mRechargeDataList;
-
-
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView textView1;
@@ -57,6 +55,7 @@ public class RechargeAdapter extends RecyclerView.Adapter<RechargeAdapter.ViewHo
 
     @Override
     public int getItemCount() {
+        Log.i(TAG, "getItemCount: "+mRechargeDataList.size());
         return mRechargeDataList.size();
     }
 }

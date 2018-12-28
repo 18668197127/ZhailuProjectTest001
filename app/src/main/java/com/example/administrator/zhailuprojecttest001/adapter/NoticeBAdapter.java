@@ -1,5 +1,6 @@
 package com.example.administrator.zhailuprojecttest001.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.administrator.zhailuprojecttest001.GlideApp;
+import com.example.administrator.zhailuprojecttest001.MainActivity;
 import com.example.administrator.zhailuprojecttest001.R;
-import com.example.administrator.zhailuprojecttest001.data.ActivityBData;
+import com.example.administrator.zhailuprojecttest001.data.NoticeBData;
 
 import java.util.List;
 
@@ -17,7 +20,8 @@ import java.util.List;
 //活动通知RecyclerView的适配器
 public class NoticeBAdapter extends RecyclerView.Adapter<NoticeBAdapter.ViewHolder>{
 
-    private List<ActivityBData> mActivityBDataList;
+    private List<NoticeBData> mNoticeBDataList;
+    private Context mContext;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView bImage;
@@ -29,8 +33,9 @@ public class NoticeBAdapter extends RecyclerView.Adapter<NoticeBAdapter.ViewHold
             bText01=view.findViewById(R.id.item_button_b_01);
         }
     }
-    public NoticeBAdapter(List<ActivityBData> activityBDataList){
-        mActivityBDataList = activityBDataList;
+    public NoticeBAdapter(List<NoticeBData> noticeBDataList,Context context){
+        mNoticeBDataList = noticeBDataList;
+        mContext=context;
     }
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -42,14 +47,14 @@ public class NoticeBAdapter extends RecyclerView.Adapter<NoticeBAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        ActivityBData activityBData= mActivityBDataList.get(i);
-        viewHolder.bImage.setImageResource(activityBData.getImageId());
-//        viewHolder.bImage.setBackgroundResource(activityBData.getImageId());
-        viewHolder.bText01.setText(activityBData.getText01());
+        NoticeBData noticeBData = mNoticeBDataList.get(i);
+        GlideApp.with(mContext).load(noticeBData.getImageURL()).into(viewHolder.bImage);
+//        viewHolder.bImage.setBackgroundResource(noticeBData.getImageId());
+        viewHolder.bText01.setText(noticeBData.getText01());
     }
 
     @Override
     public int getItemCount() {
-        return mActivityBDataList.size();
+        return mNoticeBDataList.size();
     }
 }

@@ -41,7 +41,7 @@
 
     <LinearLayout
         android:id="@+id/main_a_point_ll"
-        android:layout_width="34dp"
+        android:layout_width="54dp"
         android:layout_height="4dp"
         android:layout_marginStart="138dp"
         android:layout_marginLeft="138dp"

@@ -2,21 +2,21 @@ package com.example.administrator.zhailuprojecttest001.data;
 
 
 //活动通知的数据类
-public class ActivityBData {
-    private int imageId;
+public class NoticeBData {
+    private String  imageURL;
     private String text01;
 
-    public ActivityBData(int imageId, String text01) {
-        this.imageId = imageId;
+    public NoticeBData(String  imageURL, String text01) {
+        this.imageURL = imageURL;
         this.text01 = text01;
     }
 
-    public int getImageId() {
-        return imageId;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getText01() {

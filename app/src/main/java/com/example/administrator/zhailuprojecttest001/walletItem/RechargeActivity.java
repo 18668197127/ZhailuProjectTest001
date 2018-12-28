@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,7 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class RechargeActivity extends AppCompatActivity {
+public class RechargeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "RechargeActivity";
 
@@ -51,6 +52,18 @@ public class RechargeActivity extends AppCompatActivity {
     public void initFirst(){
         TextView textView=findViewById(R.id.layout_recharge_title).findViewById(R.id.textview_title);
         textView.setText("充值明细");
+        LinearLayout llTitleBack=findViewById(R.id.layout_recharge_title).findViewById(R.id.ll_settings_back);
+        llTitleBack.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id=v.getId();
+        switch (id){
+            case R.id.ll_settings_back:
+                finish();
+                break;
+        }
     }
 
     public void retrofitGetData(){
@@ -104,16 +117,21 @@ public class RechargeActivity extends AppCompatActivity {
                 rechargeDate.setPayType("支付宝支付");
             }else if (data3.getPay_type().equals("3")){
                 rechargeDate.setPayType("银行卡支付");
+            }else if (data3.getPay_type().equals("4")){
+                rechargeDate.setPayType("充值赠送");
             }
             rechargeDataList.add(rechargeDate);
         }
+        Log.i(TAG, "initRechargeData: "+rechargeDataList.size());
         initRecyclerView();
     }
     public void initRecyclerView(){
         RecyclerView recyclerView=findViewById(R.id.recharge_recycler);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(RechargeActivity.this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         RechargeAdapter rechargeAdapter=new RechargeAdapter(rechargeDataList);
         recyclerView.setAdapter(rechargeAdapter);
     }
+
 }

@@ -1,13 +1,6 @@
 package com.example.administrator.zhailuprojecttest001;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,28 +10,17 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
-import com.bumptech.glide.request.Request;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SizeReadyCallback;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.administrator.zhailuprojecttest001.activity.OrderActivity;
 import com.example.administrator.zhailuprojecttest001.activity.UserCenterActivity;
 import com.example.administrator.zhailuprojecttest001.adapter.NoticeBAdapter;
 import com.example.administrator.zhailuprojecttest001.adapter.AdvertAdapter;
-import com.example.administrator.zhailuprojecttest001.data.ActivityBData;
-import com.example.administrator.zhailuprojecttest001.gsonData1.Banner;
-import com.example.administrator.zhailuprojecttest001.gsonData1.Categorie;
+import com.example.administrator.zhailuprojecttest001.data.NoticeBData;
 import com.example.administrator.zhailuprojecttest001.gsonData1.Data;
-import com.example.administrator.zhailuprojecttest001.gsonData1.Notice;
 import com.example.administrator.zhailuprojecttest001.gsonData1.Result;
 import com.example.administrator.zhailuprojecttest001.retrofit.ZhailuData1;
 import com.google.gson.Gson;
@@ -50,7 +32,6 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
@@ -58,7 +39,7 @@ import retrofit2.Retrofit;
 //主页面activity
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
-    private List<ActivityBData> activityBDataList=new ArrayList<>();
+    private List<NoticeBData> noticeBDataList =new ArrayList<>();
     private NoticeBAdapter noticeBAdapter;
     private ViewPager viewPager;
     private List<View> viewList=new ArrayList<>();
@@ -78,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     private ImageButton imageButtonOrder;
     private ImageButton imageButtonUserCenter;
-
+    private int flag=0;
 
 
 
@@ -93,24 +74,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
 
         initActivityBDataList();
-        noticeBAdapter =new NoticeBAdapter(activityBDataList);
-        recyclerView=findViewById(R.id.main_a_recycler);
-        manager=new LinearLayoutManager(MainActivity.this);
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(noticeBAdapter);
+        initNoticeRecycler();
 
-
-
-
-
-        viewPager=findViewById(R.id.main_a_viewpager_1);
-        initImageButtonList();
-        AdvertAdapter advertAdapter=new AdvertAdapter(viewList);
-        viewPager.setAdapter(advertAdapter);
-        viewPager.addOnPageChangeListener(this);
-        viewPager.setCurrentItem(curIndex);
-        setOvalLayout();
+        initAdvertViewpager();
+//        setOvalLayout();
 
         retrofitGetData();
 
@@ -136,8 +103,26 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     //初始化主页面的活动
     private void initActivityBDataList(){
-        activityBDataList.add(new ActivityBData(R.drawable.test_picture_001,"这是我们的第一个活动"));
-        activityBDataList.add(new ActivityBData(R.drawable.test_picture_002,"这是我们的第二个活动"));
+//        noticeBDataList.add(new NoticeBData(R.drawable.test_picture_001,"这是我们的第一个活动"));
+//        noticeBDataList.add(new NoticeBData(R.drawable.test_picture_002,"这是我们的第二个活动"));
+    }
+
+    public void initAdvertViewpager(){
+        viewPager=findViewById(R.id.main_a_viewpager_1);
+        initImageButtonList();
+        AdvertAdapter advertAdapter=new AdvertAdapter(viewList);
+        viewPager.setAdapter(advertAdapter);
+        viewPager.addOnPageChangeListener(this);
+        viewPager.setCurrentItem(curIndex);
+    }
+
+    public void initNoticeRecycler(){
+        noticeBAdapter =new NoticeBAdapter(noticeBDataList,MainActivity.this);
+        recyclerView=findViewById(R.id.main_a_recycler);
+        manager=new LinearLayoutManager(MainActivity.this);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(noticeBAdapter);
     }
 
     //初始化广告的子view
@@ -148,14 +133,14 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 //            GlideApp.with(MainActivity.this).load(result.getData().getBanners().get(i).getBanner()).into(imageButton);
 //            viewList.add(view1);
 //        }
-        View view1=  mInflater.inflate(R.layout.advert_01,null);
+//        View view1=  mInflater.inflate(R.layout.advert_01,null);
 //        ImageButton imageButton=view1.findViewById(R.id.advert_imagebutton_01);
 //        GlideApp.with(MainActivity.this).load(result.getData().getBanners().get(0).getBanner()).into(imageButton);
-        View view2=  mInflater.inflate(R.layout.advert_02,null);
+//        View view2=  mInflater.inflate(R.layout.advert_02,null);
 //        ImageButton imageButton2=view1.findViewById(R.id.advert_imagebutton_02);
 //        GlideApp.with(MainActivity.this).load(result.getData().getBanners().get(1).getBanner()).into(imageButton2);
-        viewList.add(view1);
-        viewList.add(view2);
+//        viewList.add(view1);
+//        viewList.add(view2);
     }
 
     //retrofit获取数据Data1,之后gson解析到Result成员变量中
@@ -184,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                                 Log.i(TAG, "onResponse测试: "+result.getData().getCategories().get(0).getCate_photo());
                             }
                             Log.i(TAG, "onResponse: 测试"+R.id.advert_imagebutton_01+" "+R.id.advert_imagebutton_02);
+                            flag=1;
                             showResponseResult(result);
 //                            initImageButtonList();
 //                            setOvalLayout();
@@ -207,9 +193,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             @Override
             public void run() {
                 Data data=result.getData();
-                int s1=result.getData().getCategories().size();
-                int s2=result.getData().getBanners().size();
-                int s3=result.getData().getNotices().size();
+                int s1=data.getCategories().size();
+                int s2=data.getBanners().size();
+                int s3=data.getNotices().size();
                 for (int i=0;i<s1;i++){
                     TextView t1=findViewById(R.id.main_a_item_imagebutton_1+i).findViewById(R.id.item_textview_a_01);
                     t1.setText(data.getCategories().get(i).getCate_name());
@@ -220,18 +206,33 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                     GlideApp.with(MainActivity.this).load(data.getCategories().get(i).getCate_photo()).into(i1);
 //                    RequestOptions requestOptions=new RequestOptions();
                 }
-                for (int i=0;i<2;i++){
-                    ImageButton imageButton=findViewById(R.id.advert_layout_01+i).findViewById(getResources().getIdentifier("advert_imagebutton_0"+(i+1), "id", getPackageName()));
+                for (int i=0;i<s2;i++){
+                    if (viewList.size()!=s2){
+                        View view1=  mInflater.inflate(R.layout.advert_01,null);
+                        viewList.add(view1);
+//                        viewPager.notify();
+                        ImageButton imageButton=view1.findViewById(R.id.advert_imagebutton_01);
+                        GlideApp.with(MainActivity.this).load(data.getBanners().get(i).getBanner()).into(imageButton);
+                    }
+                    //废弃代码
+//                    ImageButton imageButton=findViewById(R.id.advert_layout_01+i).findViewById(getResources().getIdentifier("advert_imagebutton_0"+(i+1), "id", getPackageName()));
 //                    Log.i(TAG, "run: "+getResources().getIdentifier("advert_imagebutton_0"+(i+1), "id", getPackageName()));
-                    GlideApp.with(MainActivity.this).load(data.getBanners().get(i).getBanner()).into(imageButton);
+//                    GlideApp.with(MainActivity.this).load(data.getBanners().get(i).getBanner()).into(imageButton);
                 }
-                for (int i=0;i<2;i++){
-                    ImageButton imageButton=manager.findViewByPosition(i).findViewById(R.id.item_imagebutton_b_01);
-                    GlideApp.with(MainActivity.this).load(data.getNotices().get(i).getThumb()).into(imageButton);
-                    Button button=manager.findViewByPosition(i).findViewById(R.id.item_button_b_01);
-                    button.setText(data.getNotices().get(i).getDescription());
+                AdvertAdapter advertAdapter=new AdvertAdapter(viewList);
+                viewPager.setAdapter(advertAdapter);
+                setOvalLayout();
+                for (int i=0;i<s3;i++){
+                    //废弃代码
+//                    ImageButton imageButton=manager.findViewByPosition(i).findViewById(R.id.item_imagebutton_b_01);
+//                    GlideApp.with(MainActivity.this).load(data.getNotices().get(i).getThumb()).into(imageButton);
+//                    Button button=manager.findViewByPosition(i).findViewById(R.id.item_button_b_01);
+//                    button.setText(data.getNotices().get(i).getDescription());
+                    if (noticeBDataList.size()!=s3){
+                        NoticeBData noticeBData =new NoticeBData(data.getNotices().get(i).getThumb(),data.getNotices().get(i).getDescription());
+                        noticeBDataList.add(noticeBData);
+                    }
                 }
-                activityBDataList.add(new ActivityBData(R.drawable.test_picture_001,"这是我们的第一个活动"));
                 noticeBAdapter.notifyDataSetChanged();
                 
 
@@ -292,6 +293,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 //        if (pointLl.getChildAt(0)==null){
 //            setOvalLayout();
 //        }
+        if (flag==1){
+            showResponseResult(result);
+            System.out.println("第二次重新更新");
+        }
     }
 
     @Override

@@ -8,13 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.zhailuprojecttest001.R;
-import com.example.administrator.zhailuprojecttest001.data.ActivityBData;
 import com.example.administrator.zhailuprojecttest001.gsonData2.Data2;
-import com.example.administrator.zhailuprojecttest001.gsonData2.Result2;
 
 import java.util.List;
 

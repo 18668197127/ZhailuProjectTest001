@@ -11,5 +11,35 @@
         android:id="@+id/layout_consume_title"
         android:layout_width="match_parent"
         android:layout_height="48dp"/>
+    <LinearLayout
+        android:background="#EEEEEE"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="7dp"
+            android:text="累计消费: "
+            android:textColor="#050505"
+            android:textSize="13sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textview_consume_total"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="7dp"
+            android:text="123.00"
+            android:textColor="#050505"
+            android:textSize="13sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/consume_recycler"
+        android:background="#ffffff"
+        android:layout_width="350dp"
+        android:layout_height="528dp"/>
 
 </LinearLayout>

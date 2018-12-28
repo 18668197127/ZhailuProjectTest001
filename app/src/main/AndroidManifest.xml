@@ -33,11 +33,11 @@
         <activity
             android:name=".activity.SettingsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.PersonalActivity" />
-        <activity android:name=".activity.WalletActivity" />
-        <activity android:name=".walletItem.RechargeActivity" />
-        <activity android:name=".walletItem.ConsumeActivity" />
-        <activity android:name=".walletItem.CouponActivity"></activity>
+        <activity android:name=".activity.PersonalActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.WalletActivity" android:screenOrientation="portrait" />
+        <activity android:name=".walletItem.RechargeActivity" android:screenOrientation="portrait" />
+        <activity android:name=".walletItem.ConsumeActivity" android:screenOrientation="portrait" />
+        <activity android:name=".walletItem.CouponActivity" android:screenOrientation="portrait" />
     </application>
 
 </manifest>
