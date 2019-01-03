@@ -71,42 +71,38 @@ public class ConsumeActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void retrofitGetData(){
-        new Thread(new Runnable() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://test.mouqukeji.com/api/v1/user_bill/")
+                .build();
+        Data5Consume data5Consume=retrofit.create(Data5Consume.class);
+        Call<ResponseBody> call=data5Consume.getConsumeData("1","1");
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void run() {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://test.mouqukeji.com/api/v1/user_bill/")
-                        .build();
-                Data5Consume data5Consume=retrofit.create(Data5Consume.class);
-                Call<ResponseBody> call=data5Consume.getConsumeData("1","1");
-                call.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try {
-                            responseString=response.body().string();
-                            Log.i(TAG, "onResponse测试: "+responseString);
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    responseString=response.body().string();
+                    Log.i(TAG, "onResponse测试: "+responseString);
 
-                            try {
-                                JSONObject objectResult=new JSONObject(responseString);
-                                JSONObject objectConsume=objectResult.getJSONObject("data");
-                                Gson gson=new Gson();
-                                result4=gson.fromJson(objectConsume.toString(),Result4.class);
-                                Log.i(TAG, "onResponse测试: "+result4.getConsume().get(0).getMoney());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            initConsumeData();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                    try {
+                        JSONObject objectResult=new JSONObject(responseString);
+                        JSONObject objectConsume=objectResult.getJSONObject("data");
+                        Gson gson=new Gson();
+                        result4=gson.fromJson(objectConsume.toString(),Result4.class);
+                        Log.i(TAG, "onResponse测试: "+result4.getConsume().get(0).getMoney());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.i(TAG, "onResponse: "+t.toString());
-                    }
-                });
+                    initConsumeData();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }).start();
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i(TAG, "onResponse: "+t.toString());
+            }
+        });
+
     }
     public void initConsumeData(){
         consumeData2=new ConsumeData2();

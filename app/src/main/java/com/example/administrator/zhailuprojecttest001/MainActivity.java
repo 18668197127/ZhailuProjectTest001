@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +25,17 @@ import com.example.administrator.zhailuprojecttest001.adapter.AdvertAdapter;
 import com.example.administrator.zhailuprojecttest001.data.NoticeBData;
 import com.example.administrator.zhailuprojecttest001.gsonData1.Data;
 import com.example.administrator.zhailuprojecttest001.gsonData1.Result;
+import com.example.administrator.zhailuprojecttest001.gsonData4.Data4;
 import com.example.administrator.zhailuprojecttest001.register.SignInActivity;
 import com.example.administrator.zhailuprojecttest001.register.SignUpActivity;
 import com.example.administrator.zhailuprojecttest001.retrofit.ZhailuData1;
+import com.example.administrator.zhailuprojecttest001.retrofit2.Data4TokenVf;
+import com.example.administrator.zhailuprojecttest001.staticData.LoginStaticData;
+import com.example.administrator.zhailuprojecttest001.util.DataSaveSP;
 import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,6 +50,7 @@ import retrofit2.Retrofit;
 
 //主页面activity
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+    private static final String TAG = "MainActivity";
 
     private List<NoticeBData> noticeBDataList =new ArrayList<>();
     private NoticeBAdapter noticeBAdapter;
@@ -56,16 +65,17 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private LinearLayout pointLl;
     private int curIndex = 0;
 
-    private static final String TAG = "MainActivity";
 
     private LayoutInflater mInflater;
     private Result result;
 
     private ImageButton imageButtonOrder;
     private ImageButton imageButtonUserCenter;
+
+    //该flag表示是否完成首页数据的网络请求,0表示没有完成网络请求,1表示已经成功请求到首页数据
     private int flag=0;
 
-
+    private String responseTk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,12 +95,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         retrofitGetData();
 
-        if (isLogin()){
-
-        }else {
-            Intent intent=new Intent(MainActivity.this,SignInActivity.class);
-            startActivity(intent);
-        }
 
 
         //设置底部按钮的点击事件
@@ -156,46 +160,42 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     //retrofit获取数据Data1,之后gson解析到Result成员变量中
     public void retrofitGetData() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://test.mouqukeji.com/")
-                        .build();
-                ZhailuData1 zhailuData1=retrofit.create(ZhailuData1.class);
-                //test Path parameter
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://test.mouqukeji.com/")
+                .build();
+        ZhailuData1 zhailuData1=retrofit.create(ZhailuData1.class);
+        //test Path parameter
 //                Call<ResponseBody> call=zhailuData1.getZhailuData("Index");
-                //test no parameter
-                Call<ResponseBody> call=zhailuData1.getZhailuData();
-                call.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try {
-                            String s=response.body().string();
-                            Log.i(TAG, "onResponse测试: "+s);
-                            Gson gson=new Gson();
-                            result=gson.fromJson(s,Result.class);
-                            //test Categories
-                            for (int i=0;i<4;i++){
-                                Log.i(TAG, "onResponse测试: "+result.getData().getCategories().get(0).getCate_photo());
-                            }
-                            Log.i(TAG, "onResponse: 测试"+R.id.advert_imagebutton_01+" "+R.id.advert_imagebutton_02);
-                            flag=1;
-                            showResponseResult(result);
+        //test no parameter
+        Call<ResponseBody> call=zhailuData1.getZhailuData();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String s=response.body().string();
+                    Log.i(TAG, "onResponse测试1: "+s);
+                    Gson gson=new Gson();
+                    result=gson.fromJson(s,Result.class);
+                    //test Categories
+                    for (int i=0;i<4;i++){
+                        Log.i(TAG, "onResponse测试1: "+result.getData().getCategories().get(0).getCate_photo());
+                    }
+                    Log.i(TAG, "onResponse: 测试1"+R.id.advert_imagebutton_01+" "+R.id.advert_imagebutton_02);
+                    flag=1;
+                    showResponseResult(result);
 //                            initImageButtonList();
 //                            setOvalLayout();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.i(TAG, "onResponse: "+t.toString());
-                    }
-                });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }).start();
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i(TAG, "onResponse1: "+t.toString());
+            }
+        });
+
     }
 
     //将解析到的数据加载到布局中,图片加载用的是Glide
@@ -300,23 +300,99 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     //用于根据文件是否存在判断是否处在登录状态
     //用户的token信息保存的文件名为
-    public boolean isLogin(){
+    public void isLogin(){
         SharedPreferences sharedPreferences=getSharedPreferences("zhailu",Context.MODE_PRIVATE);
-        String token=sharedPreferences.getString("token",null);
+        String token=sharedPreferences.getString("tk",null);
+        String userIdEncode=sharedPreferences.getString("userId",null);
+        String userId="";
+        if (userIdEncode==null){
+            //这里是userId本地数据不存在的判断,可以加后续业务逻辑代码
+        }else {
+            //userId解密
+            String userIdDecode=new String (Base64.decode(userIdEncode.getBytes(),Base64.DEFAULT));
+            userId=userIdDecode.substring(3,userIdDecode.length()-3);
+            //验证,从sharedpreferences获取数据
+            //验证,从静态变量获取数据
+            Log.i(TAG, "isLogin: 登录验证sp "+token+" "+userId);
+            Log.i(TAG, "isLogin: 登录验证静态数据(主页): "+LoginStaticData.token+" "+LoginStaticData.userId);
+        }
         if (token==null){
-            return false;
+            //本地没有token,这里有第一个跳转
+            Intent intent=new Intent(MainActivity.this,SignInActivity.class);
+            startActivity(intent);
         }else {
             //这里是未完待写的代码:根据本地token网络请求服务器,判断token是否合法,合法返回true则无需再次登录,不合法则还是返回false,为未登录状态,同时删除本地文件
-            return true;
+            retrofitV3(token,userId);
         }
     }
 
+    //token验证请求
+    public void retrofitV3(final String token, final String userIdParam) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://test.mouqukeji.com/api/Login/")
+                .build();
+        Data4TokenVf data4TokenVf = retrofit.create(Data4TokenVf.class);
+        Call<ResponseBody> call = data4TokenVf.postData(token);
+//                Call<ResponseBody> call=getCodePost.postData2("18668197127");
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    responseTk = response.body().string();
+                    Log.i(TAG, "onResponse测试2: " + responseTk);
+                    JSONObject jsonObject=new JSONObject(responseTk);
+                    String code=jsonObject.getString("code");
+                    String msg=jsonObject.getString("msg");
+                    String data=jsonObject.getString("data");
+                    if (data.charAt(0)!='{'){
+                        //这里是token验证失败,返回data无效的判断,可以后续添加业务逻辑
+                        Intent intent=new Intent(MainActivity.this,SignInActivity.class);
+                        startActivity(intent);
+                    }else if (!msg.equals("success")){
+                        //这里也是token验证失败,返回msg不为success
+                        Intent intent=new Intent(MainActivity.this,SignInActivity.class);
+                        startActivity(intent);
+                    }else {
+                        //这里是token验证通过
+                        JSONObject jsonObject2=jsonObject.getJSONObject("data");
+                        String userId=jsonObject2.getString("user_id");
+                        //后续可以判断本地userId和该token的userId是否一致
+                        if (userId.equals(userIdParam)){
+                            Log.i(TAG, "onResponse2: userId数据验证正确");
+                        }else {
+                            Log.i(TAG, "onResponse2: userId数据验证错误: "+"本地token请求获取的userId和本地userId不相同");
+                            //这里进行访问到的userId覆盖本地userId,防止别人直接修改文件userId的入侵行为
+//                            SharedPreferences sharedPreferences=getSharedPreferences("zhailu",Context.MODE_PRIVATE);
+//                            SharedPreferences.Editor editor=sharedPreferences.edit();
+//                            editor.putString("userId",new DataSaveSP().customEncode(userId));
+//                            boolean b=editor.commit();
+                            DataSaveSP dataSaveSP=new DataSaveSP();
+                            boolean b=dataSaveSP.dataSave(userId,MainActivity.this);
+                            Log.i(TAG, "onResponse: userId覆盖结果"+b);
+                        }
+                        Log.i(TAG, "onResponse2: token验证通过");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i(TAG, "onResponse2: " + t.toString());
+            }
+        });
+    }
     @Override
     protected void onStart() {
         super.onStart();
 //        if (pointLl.getChildAt(0)==null){
 //            setOvalLayout();
 //        }
+        isLogin();
+
+
         if (flag==1){
             showResponseResult(result);
             System.out.println("第二次重新更新");

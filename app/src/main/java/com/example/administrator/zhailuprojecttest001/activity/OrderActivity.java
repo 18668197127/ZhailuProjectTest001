@@ -138,39 +138,34 @@ public class OrderActivity extends AppCompatActivity implements OrderFragment.On
 
     //retrofit获取数据Data2,之后gson解析到Result成员变量中
     public void retrofitGetData2() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://test.mouqukeji.com/api/v1/task/")
-                        .build();
-                ZhailuData2 zhailuData2=retrofit.create(ZhailuData2.class);
-                //test Path parameter
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://test.mouqukeji.com/api/v1/task/")
+                .build();
+        ZhailuData2 zhailuData2=retrofit.create(ZhailuData2.class);
+        //test Path parameter
 //                Call<ResponseBody> call=zhailuData1.getZhailuData("Index");
-                //test no parameter
-                Call<ResponseBody> call=zhailuData2.getZhailuData("1");
-                call.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try {
-                            responseString=response.body().string();
-                            Log.i(TAG, "onResponse测试: "+responseString);
-                            Gson gson=new Gson();
-                            result2=gson.fromJson(responseString,Result2.class);
-                            Log.i(TAG, "onResponse: 测试:"+result2.getData().get(0).getDelivery_time());
+        //test no parameter
+        Call<ResponseBody> call=zhailuData2.getZhailuData("1");
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    responseString=response.body().string();
+                    Log.i(TAG, "onResponse测试: "+responseString);
+                    Gson gson=new Gson();
+                    result2=gson.fromJson(responseString,Result2.class);
+                    Log.i(TAG, "onResponse: 测试:"+result2.getData().get(0).getDelivery_time());
 
 //                            initRecyclerView();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.i(TAG, "onResponse: "+t.toString());
-                    }
-                });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }).start();
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i(TAG, "onResponse: "+t.toString());
+            }
+        });
     }
 
 

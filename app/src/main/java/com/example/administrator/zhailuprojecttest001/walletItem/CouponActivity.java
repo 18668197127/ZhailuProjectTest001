@@ -67,35 +67,31 @@ public class CouponActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
     public void retrofitGetData(){
-        new Thread(new Runnable() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://test.mouqukeji.com/api/v1/coupon/")
+                .build();
+        Data6Coupon data6Coupon=retrofit.create(Data6Coupon.class);
+        Call<ResponseBody> call=data6Coupon.getCouponData("1");
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void run() {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://test.mouqukeji.com/api/v1/coupon/")
-                        .build();
-                Data6Coupon data6Coupon=retrofit.create(Data6Coupon.class);
-                Call<ResponseBody> call=data6Coupon.getCouponData("1");
-                call.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try {
-                            responseString=response.body().string();
-                            Log.i(TAG, "onResponse测试: "+responseString);
-                            Gson gson=new Gson();
-                            result5=gson.fromJson(responseString,Result5.class);
-                            Log.i(TAG, "onResponse测试: "+result5.getData().get(0).getStart_time());
-                            initRechargeData();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.i(TAG, "onResponse: "+t.toString());
-                    }
-                });
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    responseString=response.body().string();
+                    Log.i(TAG, "onResponse测试: "+responseString);
+                    Gson gson=new Gson();
+                    result5=gson.fromJson(responseString,Result5.class);
+                    Log.i(TAG, "onResponse测试: "+result5.getData().get(0).getStart_time());
+                    initRechargeData();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }).start();
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i(TAG, "onResponse: "+t.toString());
+            }
+        });
+
     }
     public void initRechargeData(){
         for (int i=0;i<result5.getData().size();i++){

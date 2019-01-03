@@ -103,42 +103,37 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
 
     //retrofit获取数据Data2,之后gson解析到Result成员变量中
     public void retrofitGetData2() {
-        new Thread(new Runnable() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://test.mouqukeji.com/api/v1/user_bill/")
+                .build();
+        Data3Wallet data3Wallet=retrofit.create(Data3Wallet.class);
+        Call<ResponseBody> call=data3Wallet.getWalletBalance("1");
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void run() {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://test.mouqukeji.com/api/v1/user_bill/")
-                        .build();
-                Data3Wallet data3Wallet=retrofit.create(Data3Wallet.class);
-                Call<ResponseBody> call=data3Wallet.getWalletBalance("1");
-                call.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try {
-                            responseString=response.body().string();
-                            Log.i(TAG, "onResponse测试: "+responseString);
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    responseString=response.body().string();
+                    Log.i(TAG, "onResponse测试: "+responseString);
 
-                            try {
-                                JSONObject objectResult=new JSONObject(responseString);
-                                JSONObject objectBalance=objectResult.getJSONObject("data");
-                                balance=objectBalance.getString("balance");
-                                Log.i(TAG, "onResponse测试: "+objectBalance.getString("balance"));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                    try {
+                        JSONObject objectResult=new JSONObject(responseString);
+                        JSONObject objectBalance=objectResult.getJSONObject("data");
+                        balance=objectBalance.getString("balance");
+                        Log.i(TAG, "onResponse测试: "+objectBalance.getString("balance"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                            updateAfterRetrofit();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.i(TAG, "onResponse: "+t.toString());
-                    }
-                });
+                    updateAfterRetrofit();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }).start();
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i(TAG, "onResponse: "+t.toString());
+            }
+        });
     }
 
     public void updateAfterRetrofit(){

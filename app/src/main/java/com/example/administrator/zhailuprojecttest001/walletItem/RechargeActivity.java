@@ -67,42 +67,39 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void retrofitGetData(){
-        new Thread(new Runnable() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://test.mouqukeji.com/api/v1/user_bill/")
+                .build();
+        Data4Recharge data4Recharge=retrofit.create(Data4Recharge.class);
+        Call<ResponseBody> call=data4Recharge.getRechargeBalance("1","1");
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void run() {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://test.mouqukeji.com/api/v1/user_bill/")
-                        .build();
-                Data4Recharge data4Recharge=retrofit.create(Data4Recharge.class);
-                Call<ResponseBody> call=data4Recharge.getRechargeBalance("1","1");
-                call.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try {
-                            responseString=response.body().string();
-                            Log.i(TAG, "onResponse测试: "+responseString);
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    responseString=response.body().string();
+                    Log.i(TAG, "onResponse测试: "+responseString);
 
-                            try {
-                                JSONObject objectResult=new JSONObject(responseString);
-                                JSONObject objectBalance=objectResult.getJSONObject("data");
-                                Gson gson=new Gson();
-                                result3=gson.fromJson(objectBalance.toString(),Result3.class);
-                                Log.i(TAG, "onResponse测试: "+result3.getBalance().get(0).getCreate_time());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            initRechargeData();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                    try {
+                        JSONObject objectResult=new JSONObject(responseString);
+                        JSONObject objectBalance=objectResult.getJSONObject("data");
+                        Gson gson=new Gson();
+                        result3=gson.fromJson(objectBalance.toString(),Result3.class);
+                        Log.i(TAG, "onResponse测试: "+result3.getBalance().get(0).getCreate_time());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.i(TAG, "onResponse: "+t.toString());
-                    }
-                });
+                    initRechargeData();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }).start();
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i(TAG, "onResponse: "+t.toString());
+            }
+        });
+
+
     }
 
     public void initRechargeData(){

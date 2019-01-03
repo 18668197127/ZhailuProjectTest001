@@ -15,5 +15,4 @@ public interface ZhailuData1 {
     //test  no parameter
     @GET("api/v1/Index")
     Call<ResponseBody> getZhailuData();
-
 }
