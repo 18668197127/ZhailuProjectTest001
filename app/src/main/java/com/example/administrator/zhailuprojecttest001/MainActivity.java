@@ -1,6 +1,8 @@
 package com.example.administrator.zhailuprojecttest001;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +24,8 @@ import com.example.administrator.zhailuprojecttest001.adapter.AdvertAdapter;
 import com.example.administrator.zhailuprojecttest001.data.NoticeBData;
 import com.example.administrator.zhailuprojecttest001.gsonData1.Data;
 import com.example.administrator.zhailuprojecttest001.gsonData1.Result;
+import com.example.administrator.zhailuprojecttest001.register.SignInActivity;
+import com.example.administrator.zhailuprojecttest001.register.SignUpActivity;
 import com.example.administrator.zhailuprojecttest001.retrofit.ZhailuData1;
 import com.google.gson.Gson;
 
@@ -80,6 +84,13 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 //        setOvalLayout();
 
         retrofitGetData();
+
+        if (isLogin()){
+
+        }else {
+            Intent intent=new Intent(MainActivity.this,SignInActivity.class);
+            startActivity(intent);
+        }
 
 
         //设置底部按钮的点击事件
@@ -285,6 +296,19 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         pointLl.getChildAt(0).findViewById(R.id.advert_point_01)
                 .setBackgroundResource(R.drawable.dot_selected);
 
+    }
+
+    //用于根据文件是否存在判断是否处在登录状态
+    //用户的token信息保存的文件名为
+    public boolean isLogin(){
+        SharedPreferences sharedPreferences=getSharedPreferences("zhailu",Context.MODE_PRIVATE);
+        String token=sharedPreferences.getString("token",null);
+        if (token==null){
+            return false;
+        }else {
+            //这里是未完待写的代码:根据本地token网络请求服务器,判断token是否合法,合法返回true则无需再次登录,不合法则还是返回false,为未登录状态,同时删除本地文件
+            return true;
+        }
     }
 
     @Override
