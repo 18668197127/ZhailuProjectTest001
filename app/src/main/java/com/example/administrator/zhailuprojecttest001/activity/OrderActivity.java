@@ -25,6 +25,7 @@ import com.example.administrator.zhailuprojecttest001.gsonData2.Data2;
 import com.example.administrator.zhailuprojecttest001.gsonData2.Result2;
 import com.example.administrator.zhailuprojecttest001.retrofit.ZhailuData1;
 import com.example.administrator.zhailuprojecttest001.retrofit.ZhailuData2;
+import com.example.administrator.zhailuprojecttest001.util.GetSPData;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -63,7 +64,9 @@ public class OrderActivity extends AppCompatActivity implements OrderFragment.On
         initFirst();
         initAdapter();
         setViewpager();
-        retrofitGetData2();
+        GetSPData getSPData=new GetSPData();
+        String userId=getSPData.getSPUserID(OrderActivity.this);
+        retrofitGetData2(userId);
     }
 
     //用于更新title和底部图片,和底部图片设置点击事件
@@ -137,7 +140,7 @@ public class OrderActivity extends AppCompatActivity implements OrderFragment.On
     }
 
     //retrofit获取数据Data2,之后gson解析到Result成员变量中
-    public void retrofitGetData2() {
+    public void retrofitGetData2(String userId) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://test.mouqukeji.com/api/v1/task/")
                 .build();
@@ -154,8 +157,13 @@ public class OrderActivity extends AppCompatActivity implements OrderFragment.On
                     Log.i(TAG, "onResponse测试: "+responseString);
                     Gson gson=new Gson();
                     result2=gson.fromJson(responseString,Result2.class);
-                    Log.i(TAG, "onResponse: 测试:"+result2.getData().get(0).getDelivery_time());
-
+                    Log.i(TAG, "onResponse: 测试:"+result2.getData().isEmpty());
+                    if (result2.getData().isEmpty()){
+                        //这里是数据访问出错
+                    }else {
+                        //这里是访问数据正常的逻辑
+                        Log.i(TAG, "onResponse: 测试:"+result2.getData().get(0).getDelivery_time());
+                    }
 //                            initRecyclerView();
                 } catch (IOException e) {
                     e.printStackTrace();

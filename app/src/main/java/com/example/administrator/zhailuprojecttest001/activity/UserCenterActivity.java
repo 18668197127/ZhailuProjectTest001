@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.example.administrator.zhailuprojecttest001.MainActivity;
 import com.example.administrator.zhailuprojecttest001.R;
 
-public class UserCenterActivity extends AppCompatActivity {
+public class UserCenterActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,21 +31,9 @@ public class UserCenterActivity extends AppCompatActivity {
         LinearLayout linearLayout=findViewById(R.id.main_b_title);
         linearLayout.setBackgroundColor(getResources().getColor(R.color.white));
 
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(UserCenterActivity.this,MainActivity.class);
-                startActivity(intent);
-            }
-        });
+        imageButton.setOnClickListener(this);
         ImageButton imageButton2=findViewById(R.id.imagebutton_order);
-        imageButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(UserCenterActivity.this,OrderActivity.class);
-                startActivity(intent);
-            }
-        });
+        imageButton2.setOnClickListener(this);
 
         LinearLayout ll_5=findViewById(R.id.ll_list_5);
         ll_5.setOnClickListener(new View.OnClickListener() {
@@ -75,4 +63,20 @@ public class UserCenterActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onClick(View v) {
+        int id=v.getId();
+        switch (id){
+            case R.id.imagebutton_homepage:
+                Intent intent=new Intent(UserCenterActivity.this,MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.imagebutton_order:
+                Intent intent2=new Intent(UserCenterActivity.this,OrderActivity.class);
+                startActivity(intent2);
+                break;
+        }
+    }
+
 }

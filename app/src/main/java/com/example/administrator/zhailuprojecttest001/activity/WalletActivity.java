@@ -1,8 +1,11 @@
 package com.example.administrator.zhailuprojecttest001.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -12,6 +15,8 @@ import com.example.administrator.zhailuprojecttest001.R;
 import com.example.administrator.zhailuprojecttest001.gsonData2.Result2;
 import com.example.administrator.zhailuprojecttest001.retrofit.Data3Wallet;
 import com.example.administrator.zhailuprojecttest001.retrofit.ZhailuData2;
+import com.example.administrator.zhailuprojecttest001.staticData.LoginStaticData;
+import com.example.administrator.zhailuprojecttest001.util.GetSPData;
 import com.example.administrator.zhailuprojecttest001.walletItem.ConsumeActivity;
 import com.example.administrator.zhailuprojecttest001.walletItem.CouponActivity;
 import com.example.administrator.zhailuprojecttest001.walletItem.RechargeActivity;
@@ -29,6 +34,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static com.example.administrator.zhailuprojecttest001.staticData.LoginStaticData.token;
+
 public class WalletActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "WalletActivity";
 
@@ -40,7 +47,9 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_d);
         initFirst();
-        retrofitGetData2();
+        GetSPData getSPData=new GetSPData();
+        String userID=getSPData.getSPUserID(WalletActivity.this);
+        retrofitGetData2(userID);
     }
 
     @Override
@@ -102,19 +111,18 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     //retrofit获取数据Data2,之后gson解析到Result成员变量中
-    public void retrofitGetData2() {
+    public void retrofitGetData2(String userId) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://test.mouqukeji.com/api/v1/user_bill/")
                 .build();
         Data3Wallet data3Wallet=retrofit.create(Data3Wallet.class);
-        Call<ResponseBody> call=data3Wallet.getWalletBalance("1");
+        Call<ResponseBody> call=data3Wallet.getWalletBalance(userId);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     responseString=response.body().string();
                     Log.i(TAG, "onResponse测试: "+responseString);
-
                     try {
                         JSONObject objectResult=new JSONObject(responseString);
                         JSONObject objectBalance=objectResult.getJSONObject("data");
@@ -135,6 +143,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
+
 
     public void updateAfterRetrofit(){
         TextView textViewBalance=findViewById(R.id.textview_wallet_balance);

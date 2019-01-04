@@ -34,6 +34,8 @@ public class DataSaveSP {
         Log.i(TAG, "dataSave: 数据持久化"+" "+userIdEncode);
         return b;
     }
+
+    //这个是userId的字符串拼接+Base64加密
     public String  customEncode(String initString){
         initString="173"+initString+"604";
         byte[] encode=Base64.encode(initString.getBytes(),Base64.DEFAULT);

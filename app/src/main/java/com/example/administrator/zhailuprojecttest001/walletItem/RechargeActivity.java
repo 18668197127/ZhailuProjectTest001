@@ -18,6 +18,7 @@ import com.example.administrator.zhailuprojecttest001.gsonData3.Data3;
 import com.example.administrator.zhailuprojecttest001.gsonData3.Result3;
 import com.example.administrator.zhailuprojecttest001.retrofit.Data3Wallet;
 import com.example.administrator.zhailuprojecttest001.retrofit.Data4Recharge;
+import com.example.administrator.zhailuprojecttest001.util.GetSPData;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -46,7 +47,9 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_recharge);
         initFirst();
-        retrofitGetData();
+        GetSPData getSPData=new GetSPData();
+        String userId=getSPData.getSPUserID(RechargeActivity.this);
+        retrofitGetData(userId);
     }
 
     public void initFirst(){
@@ -66,30 +69,43 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    public void retrofitGetData(){
+    public void retrofitGetData(String userId){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://test.mouqukeji.com/api/v1/user_bill/")
                 .build();
         Data4Recharge data4Recharge=retrofit.create(Data4Recharge.class);
-        Call<ResponseBody> call=data4Recharge.getRechargeBalance("1","1");
+        Call<ResponseBody> call=data4Recharge.getRechargeBalance(userId,"1");
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     responseString=response.body().string();
                     Log.i(TAG, "onResponse测试: "+responseString);
-
-                    try {
-                        JSONObject objectResult=new JSONObject(responseString);
-                        JSONObject objectBalance=objectResult.getJSONObject("data");
+                    JSONObject objectResult=new JSONObject(responseString);
+                    String data=objectResult.getString("data");
+                    Log.i(TAG, "onResponse: "+data);
+                    if (data.charAt(0)!='{'){
+                        //这里是数据获取为空或者失败,返回data无效的判断,可以后续添加业务逻辑
+                    }else if (data.charAt(0)=='['){
+                        //这里也是数据获取为空或者失败
+                    }else {
+                        //这里是数据获取成功
                         Gson gson=new Gson();
-                        result3=gson.fromJson(objectBalance.toString(),Result3.class);
-                        Log.i(TAG, "onResponse测试: "+result3.getBalance().get(0).getCreate_time());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        result3=gson.fromJson(data.toString(),Result3.class);
+                        Log.i(TAG, "onResponse: 充值数据是否为空"+result3.getBalance().isEmpty());
+                        if (result3.getBalance().isEmpty()){
+                            //充值数据为空,或数据异常
+                        }else {
+                            //充值数据获取成功
+                            Log.i(TAG, "onResponse测试: "+result3.getBalance().get(0).getCreate_time());
+                            initRechargeData();
+                        }
                     }
-                    initRechargeData();
+
+
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }

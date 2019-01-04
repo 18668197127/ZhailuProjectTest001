@@ -18,6 +18,7 @@ import com.example.administrator.zhailuprojecttest001.adapter.OrderListAdapter;
 import com.example.administrator.zhailuprojecttest001.gsonData2.Data2;
 import com.example.administrator.zhailuprojecttest001.gsonData2.Result2;
 import com.example.administrator.zhailuprojecttest001.retrofit.ZhailuData2;
+import com.example.administrator.zhailuprojecttest001.util.GetSPData;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -104,7 +105,9 @@ public class OrderFragment extends Fragment {
     public void onStart() {
         super.onStart();
         if (responseString.equals("6")){
-            retrofitGetData2();
+            GetSPData getSPData=new GetSPData();
+            String userId=getSPData.getSPUserID(getActivity());
+            retrofitGetData2(userId);
             Log.i(TAG, "onStart: 调用了网络请求"+mProcessId);
         }
     }
@@ -158,7 +161,7 @@ public class OrderFragment extends Fragment {
     }
 
     //retrofit获取数据Data2,之后gson解析到Result成员变量中
-    public void retrofitGetData2() {
+    public void retrofitGetData2(String userId) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://test.mouqukeji.com/api/v1/task/")
                 .build();
@@ -166,7 +169,7 @@ public class OrderFragment extends Fragment {
         //test Path parameter
 //                Call<ResponseBody> call=zhailuData1.getZhailuData("Index");
         //test no parameter
-        Call<ResponseBody> call=zhailuData2.getZhailuData("1",mProcessId);
+        Call<ResponseBody> call=zhailuData2.getZhailuData(userId,mProcessId);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -175,10 +178,14 @@ public class OrderFragment extends Fragment {
                     Log.i(TAG, "onResponse测试: "+responseString);
                     Gson gson=new Gson();
                     Result2 result2=gson.fromJson(responseString,Result2.class);
-                    Log.i(TAG, "onResponse: 测试:"+result2.getData().get(0).getDelivery_time());
+                    if (result2.getData().isEmpty()){
+                        //数据读取为空或者数据访问异常
+                    }else {
+                        Log.i(TAG, "onResponse: 测试:"+result2.getData().get(0).getDelivery_time());
+                        initRecyclerData2();
+                        initRecycler();
+                    }
 
-                    initRecyclerData2();
-                    initRecycler();
 
                 } catch (IOException e) {
                     e.printStackTrace();

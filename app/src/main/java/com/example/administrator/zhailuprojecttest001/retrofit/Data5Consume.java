@@ -8,5 +8,5 @@ import retrofit2.http.Query;
 public interface Data5Consume {
 
     @GET("buy")
-    Call<ResponseBody> getConsumeData(@Query("user_id")String id, @Query("page")String page);
+    Call<ResponseBody> getConsumeData(@Query("user_id")String userId, @Query("page")String page);
 }

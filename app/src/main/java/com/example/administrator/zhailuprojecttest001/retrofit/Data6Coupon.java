@@ -8,5 +8,5 @@ import retrofit2.http.Query;
 public interface Data6Coupon {
 
     @GET("couponList")
-    Call<ResponseBody> getCouponData(@Query("user_id")String id);
+    Call<ResponseBody> getCouponData(@Query("user_id")String userId);
 }

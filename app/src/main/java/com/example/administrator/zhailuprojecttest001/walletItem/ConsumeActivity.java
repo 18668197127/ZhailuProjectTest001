@@ -21,6 +21,7 @@ import com.example.administrator.zhailuprojecttest001.gsonData4.Data4;
 import com.example.administrator.zhailuprojecttest001.gsonData4.Result4;
 import com.example.administrator.zhailuprojecttest001.retrofit.Data4Recharge;
 import com.example.administrator.zhailuprojecttest001.retrofit.Data5Consume;
+import com.example.administrator.zhailuprojecttest001.util.GetSPData;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -50,7 +51,9 @@ public class ConsumeActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_wallet_consume);
         Log.i(TAG, "onCreate: ");
         initFirst();
-        retrofitGetData();
+        GetSPData getSPData=new GetSPData();
+        String userId=getSPData.getSPUserID(ConsumeActivity.this);
+        retrofitGetData(userId);
     }
 
     public void initFirst(){
@@ -70,30 +73,33 @@ public class ConsumeActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    public void retrofitGetData(){
+    public void retrofitGetData(String userId){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://test.mouqukeji.com/api/v1/user_bill/")
                 .build();
         Data5Consume data5Consume=retrofit.create(Data5Consume.class);
-        Call<ResponseBody> call=data5Consume.getConsumeData("1","1");
+        Call<ResponseBody> call=data5Consume.getConsumeData(userId,"1");
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     responseString=response.body().string();
                     Log.i(TAG, "onResponse测试: "+responseString);
-
-                    try {
-                        JSONObject objectResult=new JSONObject(responseString);
-                        JSONObject objectConsume=objectResult.getJSONObject("data");
-                        Gson gson=new Gson();
-                        result4=gson.fromJson(objectConsume.toString(),Result4.class);
+                    JSONObject objectResult=new JSONObject(responseString);
+                    JSONObject objectConsume=objectResult.getJSONObject("data");
+                    Gson gson=new Gson();
+                    result4=gson.fromJson(objectConsume.toString(),Result4.class);
+                    Log.i(TAG, "onResponse: 数据测试"+result4.getTotal()+" "+result4.getConsume().isEmpty());
+                    if (result4.getConsume().isEmpty()){
+                        //这里是消费数据为空或者数据获取失败
+                    }else {
                         Log.i(TAG, "onResponse测试: "+result4.getConsume().get(0).getMoney());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        initConsumeData();
                     }
-                    initConsumeData();
+
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }

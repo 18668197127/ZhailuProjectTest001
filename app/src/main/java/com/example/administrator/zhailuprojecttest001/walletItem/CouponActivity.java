@@ -20,6 +20,7 @@ import com.example.administrator.zhailuprojecttest001.gsonData5.Data5;
 import com.example.administrator.zhailuprojecttest001.gsonData5.Result5;
 import com.example.administrator.zhailuprojecttest001.retrofit.Data4Recharge;
 import com.example.administrator.zhailuprojecttest001.retrofit.Data6Coupon;
+import com.example.administrator.zhailuprojecttest001.util.GetSPData;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -47,7 +48,9 @@ public class CouponActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_coupon);
         initFirst();
-        retrofitGetData();
+        GetSPData getSPData=new GetSPData();
+        String userId=getSPData.getSPUserID(CouponActivity.this);
+        retrofitGetData(userId);
     }
 
     public void initFirst(){
@@ -66,12 +69,12 @@ public class CouponActivity extends AppCompatActivity implements View.OnClickLis
                 break;
         }
     }
-    public void retrofitGetData(){
+    public void retrofitGetData(String userId){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://test.mouqukeji.com/api/v1/coupon/")
                 .build();
         Data6Coupon data6Coupon=retrofit.create(Data6Coupon.class);
-        Call<ResponseBody> call=data6Coupon.getCouponData("1");
+        Call<ResponseBody> call=data6Coupon.getCouponData(userId);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -80,8 +83,17 @@ public class CouponActivity extends AppCompatActivity implements View.OnClickLis
                     Log.i(TAG, "onResponse测试: "+responseString);
                     Gson gson=new Gson();
                     result5=gson.fromJson(responseString,Result5.class);
-                    Log.i(TAG, "onResponse测试: "+result5.getData().get(0).getStart_time());
-                    initRechargeData();
+                    Log.i(TAG, "onResponse: "+result5.getCode()+" "+result5.getMsg());
+                    if (result5.getData().isEmpty()){
+                        //获取数据为空或者失败
+                    }else if (!result5.getCode().equals("10000")){
+                        //获取数据为空或者失败
+                    }else {
+                        //这里是获取数据成功
+                        Log.i(TAG, "onResponse测试: "+result5.getData().get(0).getStart_time());
+                        initRechargeData();
+                    }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
