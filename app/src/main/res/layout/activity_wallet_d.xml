@@ -12,13 +12,13 @@
         layout="@layout/title_zhailu_b"
         android:layout_width="match_parent"
         android:layout_height="48dp"/>
-    
+
     <android.support.constraint.ConstraintLayout
-        android:background="@drawable/custom_wallet_bg"
+        android:layout_width="340dp"
+        android:layout_height="190dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_width="340dp"
-        android:layout_height="190dp">
+        android:background="@drawable/custom_wallet_bg">
 
         <ImageView
             android:id="@+id/imageview_wallet_bg"
@@ -109,10 +109,10 @@
             app:layout_constraintVertical_bias="0.5" />
 
         <TextView
-            android:gravity="center"
             android:id="@+id/textview_wallet_recharge"
             android:layout_width="wrap_content"
             android:layout_height="31dp"
+            android:gravity="center"
             android:text="充值明细"
             android:textColor="#000000"
             android:textSize="12sp"
@@ -122,11 +122,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageview_wallet_bg"
             app:layout_constraintVertical_bias="0.5" />
+
         <TextView
-            android:gravity="center"
             android:id="@+id/textview_wallet_consume"
             android:layout_width="wrap_content"
             android:layout_height="31dp"
+            android:gravity="center"
             android:text="消费明细"
             android:textColor="#000000"
             android:textSize="12sp"
@@ -139,7 +140,7 @@
     </android.support.constraint.ConstraintLayout>
 
 
-    
+
     <LinearLayout
         android:id="@+id/ll_wallet_coupon"
         android:layout_marginTop="12dp"

@@ -12,14 +12,10 @@ import android.widget.Toast;
 
 import com.example.administrator.zhailuprojecttest001.MainActivity;
 import com.example.administrator.zhailuprojecttest001.R;
-import com.example.administrator.zhailuprojecttest001.activity.WalletActivity;
 import com.example.administrator.zhailuprojecttest001.retrofit2.Data3Login;
 import com.example.administrator.zhailuprojecttest001.staticData.LoginStaticData;
 import com.example.administrator.zhailuprojecttest001.util.DataSaveSP;
 import com.example.administrator.zhailuprojecttest001.util.FormatVf;
-import com.example.administrator.zhailuprojecttest001.walletItem.ConsumeActivity;
-import com.example.administrator.zhailuprojecttest001.walletItem.CouponActivity;
-import com.example.administrator.zhailuprojecttest001.walletItem.RechargeActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,6 +44,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         textView.setOnClickListener(this);
         Button buttonLogin=findViewById(R.id.button_sign_in);
         buttonLogin.setOnClickListener(this);
+        TextView textviewForgot=findViewById(R.id.textview_forget);
+        textviewForgot.setOnClickListener(this);
     }
 
     @Override
@@ -60,6 +58,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.textview_sign_up:
                 Intent intent1 = new Intent(SignInActivity.this, SignUpActivity.class);
                 startActivity(intent1);
+                break;
+            case R.id.textview_forget:
+                Intent intent2=new Intent(SignInActivity.this,GetbackPw1Activity.class);
+                startActivity(intent2);
                 break;
             case R.id.button_sign_in:
                 EditText editText1=findViewById(R.id.editText1);

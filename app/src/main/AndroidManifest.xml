@@ -54,7 +54,7 @@
         <activity
             android:name=".register.SignInActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".register.GetbackPwActivity" />
+        <activity android:name=".register.GetbackPw1Activity" />
         <activity android:name=".register.GetbackPw2Activity" />
         <activity android:name=".register.GetbackPw3Activity" />
         <activity android:name=".register.ChangePwActivity" />

@@ -318,6 +318,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
         if (token==null){
             //本地没有token,这里有第一个跳转
+            finish();
             Intent intent=new Intent(MainActivity.this,SignInActivity.class);
             startActivity(intent);
         }else {
@@ -346,10 +347,12 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                     String data=jsonObject.getString("data");
                     if (data.charAt(0)!='{'){
                         //这里是token验证失败,返回data无效的判断,可以后续添加业务逻辑
+                        finish();
                         Intent intent=new Intent(MainActivity.this,SignInActivity.class);
                         startActivity(intent);
                     }else if (!msg.equals("success")){
                         //这里也是token验证失败,返回msg不为success
+                        finish();
                         Intent intent=new Intent(MainActivity.this,SignInActivity.class);
                         startActivity(intent);
                     }else {

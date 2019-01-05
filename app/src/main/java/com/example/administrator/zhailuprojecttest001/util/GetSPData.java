@@ -10,9 +10,11 @@ import com.example.administrator.zhailuprojecttest001.staticData.LoginStaticData
 
 import static android.support.constraint.Constraints.TAG;
 
+//这个是获取SP数据的工具类
 public class GetSPData {
     private static final String TAG = "GetSPData";
 
+    //该方法用于获取SP的userID
     public String getSPUserID(ContextWrapper contextWrapper){
         SharedPreferences sharedPreferences=contextWrapper.getSharedPreferences("zhailu",Context.MODE_PRIVATE);
         String userIdEncode=sharedPreferences.getString("userId",null);
