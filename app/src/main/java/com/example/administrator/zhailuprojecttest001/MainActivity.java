@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,9 +24,7 @@ import com.example.administrator.zhailuprojecttest001.adapter.AdvertAdapter;
 import com.example.administrator.zhailuprojecttest001.data.NoticeBData;
 import com.example.administrator.zhailuprojecttest001.gsonData1.Data;
 import com.example.administrator.zhailuprojecttest001.gsonData1.Result;
-import com.example.administrator.zhailuprojecttest001.gsonData4.Data4;
 import com.example.administrator.zhailuprojecttest001.register.SignInActivity;
-import com.example.administrator.zhailuprojecttest001.register.SignUpActivity;
 import com.example.administrator.zhailuprojecttest001.retrofit.ZhailuData1;
 import com.example.administrator.zhailuprojecttest001.retrofit2.Data4TokenVf;
 import com.example.administrator.zhailuprojecttest001.staticData.LoginStaticData;
@@ -73,7 +70,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private ImageButton imageButtonUserCenter;
 
     //该flag表示是否完成首页数据的网络请求,0表示没有完成网络请求,1表示已经成功请求到首页数据
-    private int flag=0;
+    private int flag1 =0;
+    //该flag表示是否处于登录状态,0表示未登录状态,1表示已经登录状态
+    private int flag2 =0;
 
     private String responseTk;
 
@@ -181,8 +180,12 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                         Log.i(TAG, "onResponse测试1: "+result.getData().getCategories().get(0).getCate_photo());
                     }
                     Log.i(TAG, "onResponse: 测试1"+R.id.advert_imagebutton_01+" "+R.id.advert_imagebutton_02);
-                    flag=1;
-                    showResponseResult(result);
+                    flag1 =1;
+
+                    //这里是不是考虑放在另外位置执行,是否会和验证登录状态的跳转冲突
+                    //果然产生冲突,如果跳转和更新UI同时进行就error,这里选择在start()中开启一个子线程监听调用showResponseResult(result);
+//                    showResponseResult(result);
+
 //                            initImageButtonList();
 //                            setOvalLayout();
                 } catch (IOException e) {
@@ -357,6 +360,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                         startActivity(intent);
                     }else {
                         //这里是token验证通过
+                        flag2=1;
                         JSONObject jsonObject2=jsonObject.getJSONObject("data");
                         String userId=jsonObject2.getString("user_id");
                         //后续可以判断本地userId和该token的userId是否一致
@@ -395,11 +399,25 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 //        }
         isLogin();
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    if (flag1 ==1&&flag2==1){
+                        showResponseResult(result);
+                        System.out.println("第二次重新更新");
+                        break;
+                    }else{
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
 
-        if (flag==1){
-            showResponseResult(result);
-            System.out.println("第二次重新更新");
-        }
     }
 
     @Override

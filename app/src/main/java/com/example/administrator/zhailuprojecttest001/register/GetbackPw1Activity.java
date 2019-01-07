@@ -45,6 +45,8 @@ public class GetbackPw1Activity extends AppCompatActivity implements View.OnClic
     public void initClick() {
         Button buttonNext=findViewById(R.id.button_next);
         buttonNext.setOnClickListener(this);
+        Button button2=findViewById(R.id.button_test);
+        button2.setOnClickListener(this);
     }
 
     @Override
@@ -52,11 +54,13 @@ public class GetbackPw1Activity extends AppCompatActivity implements View.OnClic
         //初始化工具类,格式验证
         FormatVf formatVf = new FormatVf();
 
+        EditText editText1=findViewById(R.id.editText1);
+        String editText1String=editText1.getText().toString();
+
         int id = v.getId();
         switch (id) {
             case R.id.button_next:
-                EditText editText1=findViewById(R.id.editText1);
-                String editText1String=editText1.getText().toString();
+
                 if (!formatVf.isPhone(editText1String)){
                     Toast toast=Toast.makeText(GetbackPw1Activity.this,"",Toast.LENGTH_SHORT);
                     toast.setText("请输入正确格式的手机号码");
@@ -65,6 +69,11 @@ public class GetbackPw1Activity extends AppCompatActivity implements View.OnClic
                     //格式验证通过,进行后续操作:网络请求验证码
                     retrofitV5(editText1String);
                 }
+                break;
+            case R.id.button_test:
+                Intent intent=new Intent(GetbackPw1Activity.this,GetbackPw2Activity.class);
+                intent.putExtra("telephone",editText1String);
+                startActivity(intent);
                 break;
         }
     }
