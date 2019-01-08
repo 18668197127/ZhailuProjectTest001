@@ -1,8 +1,13 @@
 package com.example.administrator.zhailuprojecttest001.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -10,8 +15,11 @@ import android.widget.TextView;
 
 import com.example.administrator.zhailuprojecttest001.MainActivity;
 import com.example.administrator.zhailuprojecttest001.R;
+import com.example.administrator.zhailuprojecttest001.dialog.OpenPhoneDialog;
 
 public class UserCenterActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "UserCenterActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +43,15 @@ public class UserCenterActivity extends AppCompatActivity implements View.OnClic
         ImageButton imageButton2=findViewById(R.id.imagebutton_order);
         imageButton2.setOnClickListener(this);
 
+        TextView textViewPhone=findViewById(R.id.text_open_phone);
+        textViewPhone.setOnClickListener(this);
+
         LinearLayout ll_5=findViewById(R.id.ll_list_5);
         ll_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(UserCenterActivity.this,SettingsActivity.class);
                 startActivity(intent);
-
             }
         });
         LinearLayout ll_1=findViewById(R.id.ll_list_1);
@@ -50,7 +60,6 @@ public class UserCenterActivity extends AppCompatActivity implements View.OnClic
             public void onClick(View v) {
                 Intent intent=new Intent(UserCenterActivity.this,PersonalActivity.class);
                 startActivity(intent);
-
             }
         });
         LinearLayout ll_2=findViewById(R.id.ll_list_2);
@@ -59,7 +68,6 @@ public class UserCenterActivity extends AppCompatActivity implements View.OnClic
             public void onClick(View v) {
                 Intent intent=new Intent(UserCenterActivity.this,WalletActivity.class);
                 startActivity(intent);
-
             }
         });
     }
@@ -76,7 +84,17 @@ public class UserCenterActivity extends AppCompatActivity implements View.OnClic
                 Intent intent2=new Intent(UserCenterActivity.this,OrderActivity.class);
                 startActivity(intent2);
                 break;
+            case R.id.text_open_phone:
+                OpenPhoneDialog openPhoneDialog=new OpenPhoneDialog(UserCenterActivity.this);
+                openPhoneDialog.setIcallPhone(new OpenPhoneDialog.IcallPhone() {
+                    @Override
+                    public void callPhone() {
+                        Intent intentPhone = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + 4001790720l));
+                        startActivity(intentPhone);
+                    }
+                });
+                openPhoneDialog.show();
+                break;
         }
     }
-
 }

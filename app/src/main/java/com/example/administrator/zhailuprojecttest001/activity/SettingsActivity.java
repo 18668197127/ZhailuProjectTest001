@@ -1,6 +1,7 @@
 package com.example.administrator.zhailuprojecttest001.activity;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,9 @@ import android.widget.TextView;
 
 import com.example.administrator.zhailuprojecttest001.MainActivity;
 import com.example.administrator.zhailuprojecttest001.R;
+import com.example.administrator.zhailuprojecttest001.register.ChangePwActivity;
+import com.example.administrator.zhailuprojecttest001.register.SignInActivity;
+import com.example.administrator.zhailuprojecttest001.util.LoginQuit;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "SettingsActivity";
@@ -33,6 +37,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         llTitleBack.setOnClickListener(this);
         Button buttonQuit=findViewById(R.id.button_settings_quit);
         buttonQuit.setOnClickListener(this);
+        LinearLayout llChangePw=findViewById(R.id.ll_settings_list_1);
+        llChangePw.setOnClickListener(this);
     }
 
     @Override
@@ -44,18 +50,15 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.button_settings_quit:
                 //这里是退出登录的操作
-                loginQuit();
-                finish();
-                Intent intent=new Intent(SettingsActivity.this,MainActivity.class);
+                int type=1;
+                new LoginQuit().loginQuit(SettingsActivity.this,type);
+                break;
+            case R.id.ll_settings_list_1:
+                Intent intent2=new Intent(SettingsActivity.this,ChangePwActivity.class);
+                startActivity(intent2);
                 break;
         }
     }
 
-    public void loginQuit(){
-        SharedPreferences sharedPreferences=getSharedPreferences("zhailu",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.clear();
-        boolean b=editor.commit();
-        Log.i(TAG, "loginQuit: 是否成功清空SP数据 "+b);
-    }
+
 }

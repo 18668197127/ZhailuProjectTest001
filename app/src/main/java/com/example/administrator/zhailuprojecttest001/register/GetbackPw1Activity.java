@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,8 +46,11 @@ public class GetbackPw1Activity extends AppCompatActivity implements View.OnClic
     public void initClick() {
         Button buttonNext=findViewById(R.id.button_next);
         buttonNext.setOnClickListener(this);
+        //这个是测试按钮,正式版请删除,layout中也要删除
         Button button2=findViewById(R.id.button_test);
         button2.setOnClickListener(this);
+        LinearLayout linearLayout=findViewById(R.id.ll_cancel);
+        linearLayout.setOnClickListener(this);
     }
 
     @Override
@@ -71,9 +75,13 @@ public class GetbackPw1Activity extends AppCompatActivity implements View.OnClic
                 }
                 break;
             case R.id.button_test:
+                //这里是测试按钮,正式版请删除
                 Intent intent=new Intent(GetbackPw1Activity.this,GetbackPw2Activity.class);
                 intent.putExtra("telephone",editText1String);
                 startActivity(intent);
+                break;
+            case R.id.ll_cancel:
+                finish();
                 break;
         }
     }

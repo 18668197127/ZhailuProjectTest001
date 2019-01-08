@@ -197,8 +197,9 @@
                 android:textSize="12sp"
                 android:textColor="#000000"/>
             <TextView
-                android:layout_marginLeft="142dp"
-                android:layout_marginTop="18dp"
+                android:id="@+id/text_open_phone"
+                android:layout_marginLeft="150dp"
+                android:layout_marginTop="14dp"
                 android:text="400-179-0720"
                 android:textSize="10sp"
                 android:textColor="#000000"

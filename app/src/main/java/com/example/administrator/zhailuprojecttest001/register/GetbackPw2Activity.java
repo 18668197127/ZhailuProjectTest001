@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.administrator.zhailuprojecttest001.R;
@@ -39,6 +40,7 @@ public class GetbackPw2Activity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getback_pw2);
         initEdit();
+        initClick();
     }
 
     public void initEdit(){
@@ -174,6 +176,8 @@ public class GetbackPw2Activity extends AppCompatActivity implements View.OnClic
     public void initClick() {
         Button button=findViewById(R.id.button_again);
         button.setOnClickListener(this);
+        LinearLayout linearLayout=findViewById(R.id.ll_cancel);
+        linearLayout.setOnClickListener(this);
     }
 
     @Override
@@ -181,6 +185,9 @@ public class GetbackPw2Activity extends AppCompatActivity implements View.OnClic
         int id = v.getId();
         switch (id) {
             case R.id.button_again:
+                break;
+            case R.id.ll_cancel:
+                finish();
                 break;
 
 

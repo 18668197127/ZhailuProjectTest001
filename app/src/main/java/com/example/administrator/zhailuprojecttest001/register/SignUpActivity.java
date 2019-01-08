@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +25,7 @@ import com.example.administrator.zhailuprojecttest001.retrofit2.Data2GetCode;
 import com.example.administrator.zhailuprojecttest001.staticData.LoginStaticData;
 import com.example.administrator.zhailuprojecttest001.util.DataSaveSP;
 import com.example.administrator.zhailuprojecttest001.util.FormatVf;
+import com.example.administrator.zhailuprojecttest001.util.LoginStatus;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,13 +45,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private String responseString1;
     private String responseString2;
 
-    private String replaceInit="";
+    private boolean flag=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         initClick();
+//        EditText editText3=findViewById(R.id.editText3);
+//        editText3.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
     }
     //初始化点击事件
     public void initClick() {
@@ -57,6 +64,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         //这个透明的view用于密码显示隐藏的点击效果实现
         View viewClickReplace=findViewById(R.id.view_click_replace);
         viewClickReplace.setOnClickListener(this);
+        LinearLayout linearLayout=findViewById(R.id.ll_cancel_signup);
+        linearLayout.setOnClickListener(this);
     }
     //点击事件的具体实现
     @Override
@@ -84,11 +93,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
             case R.id.button_sign_up:
-                if (editText3String.equals("")){
-                    ;
-                }else if (editText3String.charAt(0)=='*'){
-                    editText3String=replaceInit;
-                }
                 Log.i(TAG, "onClick: "+editText3String+" "+editText3String.length());
                 if (formatVf.isPassword(editText3String)&&formatVf.isVf(editText2String)&&formatVf.isPhone(editText1String)){
                     Log.i(TAG, "onClick注册: 三个文本输入格式正确");
@@ -115,21 +119,25 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
             case R.id.view_click_replace:
-                if (editText3String.equals("")||editText3String.charAt(0)=='*'){
-                    editText3.setText(replaceInit);
-                    ImageView imageViewZhengkai2=findViewById(R.id.imageView_zhengkai);
-                    imageViewZhengkai2.setVisibility(View.VISIBLE);
-                }else {
-                    replaceInit=editText3String;
-                    int length2=editText3String.length();
-                    StringBuffer stringBuffer2=new StringBuffer();
-                    for (int i=0;i<length2;i++){
-                        stringBuffer2.append("*");
-                    }
-                    editText3.setText(stringBuffer2.toString());
+                //这里是密码的可见不可见设置
+                if (flag){
+                    //当前代码可见,将其设置为不可见,并且隐藏眼睛图片
+                    flag=false;
                     ImageView imageViewZhengkai2=findViewById(R.id.imageView_zhengkai);
                     imageViewZhengkai2.setVisibility(View.INVISIBLE);
+                    editText3.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }else{
+                    //当前代码不可见,将其设置为可见,并且显示眼睛图片
+                    flag=true;
+                    ImageView imageViewZhengkai2=findViewById(R.id.imageView_zhengkai);
+                    imageViewZhengkai2.setVisibility(View.VISIBLE);
+                    editText3.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 }
+                break;
+            case R.id.ll_cancel_signup:
+                finish();
+                Intent intent=new Intent(SignUpActivity.this,SignInActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -200,23 +208,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         JSONObject jsonObject2=jsonObject.getJSONObject("data");
                         String userId=jsonObject2.getString("user_id");
                         String tkString=jsonObject2.getString("token");
-                        LoginStaticData.token=tkString;
-                        LoginStaticData.userId=userId;
 //                            Log.i(TAG, "onResponse: JSon解析测试:"+data);
                         Log.i(TAG, "onResponse: JSon解析测试:"+userId+" "+tkString);
 
-                        //这里是进行数据SP持久化+页面跳转
-                        DataSaveSP dataSaveSP=new DataSaveSP();
-                        boolean b=dataSaveSP.dataSave(tkString,userId,SignUpActivity.this);
-                        //注册完成之后,在存储完token和userId之后则表示登录成功,跳转到主页面
-                        if (b){
-                            Intent intent=new Intent(SignUpActivity.this,MainActivity.class);
-                            startActivity(intent);
-                        }else {
-                            Toast toast=Toast.makeText(SignUpActivity.this,"",Toast.LENGTH_SHORT);
-                            toast.setText("系统错误,注册无效");
-                            toast.show();
-                        }
+                        new LoginStatus().loginStatus(SignUpActivity.this,tkString,userId,phone);
                     }
 
                 } catch (IOException e) {
@@ -234,13 +229,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-
-
-
     @Override
-    protected void onPause() {
-        super.onPause();
-        //验证一下静态变量的数据(数据持久化确认存入,没有验证必要)
-        Log.i(TAG, "onPause: 静态变量数据"+LoginStaticData.token+" "+LoginStaticData.userId);
+    public void onBackPressed() {
+        Intent intent=new Intent(SignUpActivity.this,SignInActivity.class);
+        startActivity(intent);
+        finish();
     }
+
+
 }
