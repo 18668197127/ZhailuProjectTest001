@@ -7,13 +7,13 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 //retrofit2的一个接口
-public interface Data9ChangePhone {
+public interface Data10GetCode3 {
 
 
         //test1
         @FormUrlEncoded
-        @POST("editMobile")
-        Call<ResponseBody> postData(@Field("user_id") String userId, @Field("telephone") String newTelephone, @Field("code") String code);
+        @POST("telCode")
+        Call<ResponseBody> postData(@Field("telephone") String newTelephone, @Field("type") String type);
 
 
 }

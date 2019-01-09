@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.example.administrator.zhailuprojecttest001.retrofit2.Data3Login;
 import com.example.administrator.zhailuprojecttest001.staticData.LoginStaticData;
 import com.example.administrator.zhailuprojecttest001.util.DataSaveSP;
 import com.example.administrator.zhailuprojecttest001.util.FormatVf;
+import com.example.administrator.zhailuprojecttest001.util.LoginStatus;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +48,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         buttonLogin.setOnClickListener(this);
         TextView textviewForgot=findViewById(R.id.textview_forget);
         textviewForgot.setOnClickListener(this);
+        LinearLayout linearLayout=findViewById(R.id.ll_cancel_signin);
+        linearLayout.setOnClickListener(this);
     }
 
     @Override
@@ -56,6 +60,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         int id = v.getId();
         switch (id) {
             case R.id.textview_sign_up:
+                finish();
                 Intent intent1 = new Intent(SignInActivity.this, SignUpActivity.class);
                 startActivity(intent1);
                 break;
@@ -80,6 +85,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     //格式验证通过,进行后续操作:网络请求
                     retrofitV4(editText1String,editText2String);
                 }
+                break;
+            case R.id.ll_cancel_signin:
+                finish();
                 break;
         }
     }
@@ -112,22 +120,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                         String userId=jsonObject2.getString("user_id");
                         String token=jsonObject2.getString("token");
                         //静态数据存储
-                        LoginStaticData.userId=userId;
-                        LoginStaticData.token=token;
                         Log.i(TAG, "onResponse: JSon解析测试:"+userId+" "+token);
 
-                        //这里是进行数据SP持久化+页面跳转
-                        DataSaveSP dataSaveSP=new DataSaveSP();
-                        boolean b=dataSaveSP.dataSave(token,userId,SignInActivity.this);
-                        //注册完成之后,在存储完token和userId之后则表示登录成功,跳转到主页面
-                        if (b){
-                            Intent intent=new Intent(SignInActivity.this,MainActivity.class);
-                            startActivity(intent);
-                        }else {
-                            Toast toast=Toast.makeText(SignInActivity.this,"",Toast.LENGTH_SHORT);
-                            toast.setText("系统错误,登录无效");
-                            toast.show();
-                        }
+                        new LoginStatus().loginStatus(SignInActivity.this,token,userId,telephone);
                     }
 
                 } catch (IOException e) {

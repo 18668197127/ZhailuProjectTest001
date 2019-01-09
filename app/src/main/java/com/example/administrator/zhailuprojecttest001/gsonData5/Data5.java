@@ -1,4 +1,4 @@
-package com.example.administrator.zhailuprojecttest001.gsonData5_6;
+package com.example.administrator.zhailuprojecttest001.gsonData5;
 
 public class Data5 {
     private String cate_name;

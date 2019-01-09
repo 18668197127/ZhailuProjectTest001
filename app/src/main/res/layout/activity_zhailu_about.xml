@@ -6,4 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".activity.ZhaiLuAboutActivity">
 
+    <include
+        android:id="@+id/layout_settings_title"
+        layout="@layout/title_zhailu_b"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+
+    <LinearLayout
+        android:background="#ffffff"
+        android:id="@+id/ll_zhailu_about"
+        android:layout_width="340dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_settings_title">
+
+        <ImageView
+            android:background="@drawable/image_zhailu_about"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:id="@+id/image_zhailu_about"
+            android:layout_width="83dp"
+            android:layout_height="83dp" />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:text="@string/zhailu_about"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_update"
+        android:gravity="center"
+        android:layout_width="340dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff"
+        android:text="版本更新"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_zhailu_about" />
+
 </android.support.constraint.ConstraintLayout>

@@ -59,7 +59,7 @@
         <activity android:name=".register.GetbackPw3Activity" />
         <activity android:name=".register.ChangePwActivity" />
         <activity android:name=".register.ChangePhoneActivity" />
-        <activity android:name=".register.ChangePw2Activity"></activity>
+        <activity android:name=".activity.ZhaiLuAboutActivity"></activity>
     </application>
 
 </manifest>

@@ -12,6 +12,20 @@ public class DataSaveSP {
     private static final String TAG = "DataSaveSP";
 
     //token数据和user_id数据持久化
+    public boolean dataSave(String token, String userId,String telephone, ContextWrapper contextWrapper){
+        SharedPreferences sharedPreferences=contextWrapper.getSharedPreferences("zhailu",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString("tk",token);
+        //数据加密
+        String userIdEncode=customEncode(userId);
+        editor.putString("userId",userIdEncode);
+        editor.putString("telephone",telephone);
+        boolean b=editor.commit();
+        Log.i(TAG, "dataSave: 数据持久化"+token+" "+userIdEncode+" "+telephone);
+        return b;
+    }
+
+    //token数据和user_id数据持久化
     public boolean dataSave(String token, String userId, ContextWrapper contextWrapper){
         SharedPreferences sharedPreferences=contextWrapper.getSharedPreferences("zhailu",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
@@ -20,7 +34,7 @@ public class DataSaveSP {
         String userIdEncode=customEncode(userId);
         editor.putString("userId",userIdEncode);
         boolean b=editor.commit();
-        Log.i(TAG, "dataSave: 数据持久化"+token+" "+userIdEncode);
+        Log.i(TAG, "dataSave: 数据持久化"+token+" "+userIdEncode+" ");
         return b;
     }
     //user_id数据持久化

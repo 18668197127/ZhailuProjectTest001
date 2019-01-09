@@ -7,7 +7,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 //retrofit2的一个接口
-public interface Data7ChangeCode {
+public interface Data7ResetPw {
 
 
         //test1

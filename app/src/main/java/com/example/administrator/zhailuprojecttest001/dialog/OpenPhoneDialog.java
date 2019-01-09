@@ -1,21 +1,13 @@
-package com.example.dialogtest01.openPhone;
+package com.example.administrator.zhailuprojecttest001.dialog;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.dialogtest01.R;
+import com.example.administrator.zhailuprojecttest001.R;
+
 
 public class OpenPhoneDialog extends Dialog {
     private static final String TAG = "OpenPhoneDialog";
@@ -29,7 +21,7 @@ public class OpenPhoneDialog extends Dialog {
         super(context);
     }
 
-    public OpenPhoneDialog( Context context, int themeResId) {
+    public OpenPhoneDialog(Context context, int themeResId) {
         super(context, themeResId);
     }
 

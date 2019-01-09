@@ -7,13 +7,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.administrator.zhailuprojecttest001.MainActivity;
 import com.example.administrator.zhailuprojecttest001.R;
-import com.example.administrator.zhailuprojecttest001.retrofit2.Data6CheckCode;
-import com.example.administrator.zhailuprojecttest001.retrofit2.Data7ChangeCode;
+import com.example.administrator.zhailuprojecttest001.activity.SettingsActivity;
+import com.example.administrator.zhailuprojecttest001.retrofit2.Data7ResetPw;
 import com.example.administrator.zhailuprojecttest001.util.FormatVf;
+import com.example.administrator.zhailuprojecttest001.util.LoginQuit;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +53,8 @@ public class GetbackPw3Activity extends AppCompatActivity implements View.OnClic
     public void initClick(){
         Button button=findViewById(R.id.button_sign_in);
         button.setOnClickListener(this);
+        LinearLayout linearLayout=findViewById(R.id.ll_cancel);
+        linearLayout.setOnClickListener(this);
     }
 
     @Override
@@ -71,6 +74,9 @@ public class GetbackPw3Activity extends AppCompatActivity implements View.OnClic
                     toast.show();
                 }
                 break;
+            case R.id.ll_cancel:
+                finish();
+                break;
         }
     }
 
@@ -79,8 +85,8 @@ public class GetbackPw3Activity extends AppCompatActivity implements View.OnClic
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://test.mouqukeji.com/api/Login/")
                 .build();
-        Data7ChangeCode data7ChangeCode =retrofit.create(Data7ChangeCode.class);
-        Call<ResponseBody> call=data7ChangeCode.postData(telephone,code,password);
+        Data7ResetPw data7ResetPw =retrofit.create(Data7ResetPw.class);
+        Call<ResponseBody> call= data7ResetPw.postData(telephone,code,password);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -102,9 +108,8 @@ public class GetbackPw3Activity extends AppCompatActivity implements View.OnClic
                         Toast toast=Toast.makeText(GetbackPw3Activity.this,"",Toast.LENGTH_SHORT);
                         toast.setText("密码重置成功");
                         toast.show();
-                        Intent intent=new Intent(GetbackPw3Activity.this,SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                        int type=0;
+                        new LoginQuit().loginQuit(GetbackPw3Activity.this,type);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
