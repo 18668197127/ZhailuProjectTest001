@@ -29,8 +29,18 @@ public class GetSPData {
             //验证,从sharedpreferences获取数据
             //验证,从静态变量获取数据
             Log.i(TAG, "getSPUserID: sp读取"+userId);
-            Log.i(TAG, "getSPUserID: 静态"+LoginStaticData.userId);
             return userId;
         }
+    }
+    //获取token
+    public String getSPToken(ContextWrapper contextWrapper){
+        SharedPreferences sharedPreferences=contextWrapper.getSharedPreferences("zhailu",Context.MODE_PRIVATE);
+        return sharedPreferences.getString("tk",null);
+    }
+
+    //获取token
+    public String getSPTelephone(ContextWrapper contextWrapper){
+        SharedPreferences sharedPreferences=contextWrapper.getSharedPreferences("zhailu",Context.MODE_PRIVATE);
+        return sharedPreferences.getString("telephone",null);
     }
 }

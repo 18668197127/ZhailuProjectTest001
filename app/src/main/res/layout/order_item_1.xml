@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/background_order_item"
     android:layout_width="332dp"
-    android:layout_height="148dp">
+    android:layout_height="148dp"
+    >
 
     <View
         android:id="@+id/view5"

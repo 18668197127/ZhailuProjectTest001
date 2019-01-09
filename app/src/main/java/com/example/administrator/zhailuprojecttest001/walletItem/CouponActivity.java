@@ -11,20 +11,12 @@ import android.widget.TextView;
 
 import com.example.administrator.zhailuprojecttest001.R;
 import com.example.administrator.zhailuprojecttest001.adapter.CouponAdapter;
-import com.example.administrator.zhailuprojecttest001.adapter.RechargeAdapter;
 import com.example.administrator.zhailuprojecttest001.data.CouponData;
-import com.example.administrator.zhailuprojecttest001.data.RechargeData;
-import com.example.administrator.zhailuprojecttest001.gsonData3.Data3;
-import com.example.administrator.zhailuprojecttest001.gsonData3.Result3;
 import com.example.administrator.zhailuprojecttest001.gsonData5.Data5;
 import com.example.administrator.zhailuprojecttest001.gsonData5.Result5;
-import com.example.administrator.zhailuprojecttest001.retrofit.Data4Recharge;
 import com.example.administrator.zhailuprojecttest001.retrofit.Data6Coupon;
 import com.example.administrator.zhailuprojecttest001.util.GetSPData;
 import com.google.gson.Gson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;

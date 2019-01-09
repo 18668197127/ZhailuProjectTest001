@@ -29,6 +29,7 @@ import com.example.administrator.zhailuprojecttest001.retrofit.ZhailuData1;
 import com.example.administrator.zhailuprojecttest001.retrofit2.Data4TokenVf;
 import com.example.administrator.zhailuprojecttest001.staticData.LoginStaticData;
 import com.example.administrator.zhailuprojecttest001.util.DataSaveSP;
+import com.example.administrator.zhailuprojecttest001.util.GetSPData;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private List<NoticeBData> noticeBDataList =new ArrayList<>();
     private NoticeBAdapter noticeBAdapter;
     private ViewPager viewPager;
+    private AdvertAdapter advertAdapter;
     private List<View> viewList=new ArrayList<>();
 
     private RecyclerView recyclerView;
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     public void initAdvertViewpager(){
         viewPager=findViewById(R.id.main_a_viewpager_1);
         initImageButtonList();
-        AdvertAdapter advertAdapter=new AdvertAdapter(viewList);
+        advertAdapter=new AdvertAdapter(viewList);
         viewPager.setAdapter(advertAdapter);
         viewPager.addOnPageChangeListener(this);
         viewPager.setCurrentItem(curIndex);
@@ -210,38 +212,35 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 int s1=data.getCategories().size();
                 int s2=data.getBanners().size();
                 int s3=data.getNotices().size();
-                for (int i=0;i<s1;i++){
-                    TextView t1=findViewById(R.id.main_a_item_imagebutton_1+i).findViewById(R.id.item_textview_a_01);
+                //这里更新category数据
+                for (int i=0;i<4;i++){
+                    Log.i(TAG, "run: "+getResources().getIdentifier("main_a_item_imagebutton_"+(i+1), "id", getPackageName()));
+                    TextView t1=findViewById(getResources().getIdentifier("main_a_item_imagebutton_"+(i+1), "id", getPackageName())
+                            ).findViewById(R.id.item_textview_a_01);
                     t1.setText(data.getCategories().get(i).getCate_name());
-                    final ImageButton i1=findViewById(R.id.main_a_item_imagebutton_1+i).findViewById(R.id.item_imagebutton_a_01);
-
-                    //glide
-//                    GlideApp.with(MainActivity.this).load(data.getCategories().get(i).getCate_photo()).into(i1);
+                    final ImageButton i1=findViewById(getResources().getIdentifier("main_a_item_imagebutton_"+(i+1), "id", getPackageName())
+                            ).findViewById(R.id.item_imagebutton_a_01);
                     GlideApp.with(MainActivity.this).load(data.getCategories().get(i).getCate_photo()).into(i1);
-//                    RequestOptions requestOptions=new RequestOptions();
+
                 }
+                //这里更新Banner数据
                 for (int i=0;i<s2;i++){
                     if (viewList.size()!=s2){
                         View view1=  mInflater.inflate(R.layout.advert_01,null);
                         viewList.add(view1);
-//                        viewPager.notify();
                         ImageButton imageButton=view1.findViewById(R.id.advert_imagebutton_01);
                         GlideApp.with(MainActivity.this).load(data.getBanners().get(i).getBanner()).into(imageButton);
                     }
-                    //废弃代码
-//                    ImageButton imageButton=findViewById(R.id.advert_layout_01+i).findViewById(getResources().getIdentifier("advert_imagebutton_0"+(i+1), "id", getPackageName()));
-//                    Log.i(TAG, "run: "+getResources().getIdentifier("advert_imagebutton_0"+(i+1), "id", getPackageName()));
-//                    GlideApp.with(MainActivity.this).load(data.getBanners().get(i).getBanner()).into(imageButton);
+
                 }
-                AdvertAdapter advertAdapter=new AdvertAdapter(viewList);
-                viewPager.setAdapter(advertAdapter);
+                advertAdapter.notifyDataSetChanged();
+
+                //这里初始化广告下方的白点
                 setOvalLayout();
+
+                //这里更新notice数据
                 for (int i=0;i<s3;i++){
-                    //废弃代码
-//                    ImageButton imageButton=manager.findViewByPosition(i).findViewById(R.id.item_imagebutton_b_01);
-//                    GlideApp.with(MainActivity.this).load(data.getNotices().get(i).getThumb()).into(imageButton);
-//                    Button button=manager.findViewByPosition(i).findViewById(R.id.item_button_b_01);
-//                    button.setText(data.getNotices().get(i).getDescription());
+
                     if (noticeBDataList.size()!=s3){
                         NoticeBData noticeBData =new NoticeBData(data.getNotices().get(i).getThumb(),data.getNotices().get(i).getDescription());
                         noticeBDataList.add(noticeBData);
@@ -304,20 +303,24 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     //用于根据文件是否存在判断是否处在登录状态
     //用户的token信息保存的文件名为
     public void isLogin(){
-        SharedPreferences sharedPreferences=getSharedPreferences("zhailu",Context.MODE_PRIVATE);
-        String token=sharedPreferences.getString("tk",null);
-        String userIdEncode=sharedPreferences.getString("userId",null);
-        String userId="";
-        if (userIdEncode==null){
-            //这里是userId本地数据不存在的判断,可以加后续业务逻辑代码
-        }else {
-            //userId解密
-            String userIdDecode=new String (Base64.decode(userIdEncode.getBytes(),Base64.DEFAULT));
-            userId=userIdDecode.substring(3,userIdDecode.length()-3);
-            //验证,从sharedpreferences获取数据
-            //验证,从静态变量获取数据
-            Log.i(TAG, "isLogin: 登录验证sp "+token+" "+userId);
-            Log.i(TAG, "isLogin: 登录验证静态数据(主页): "+LoginStaticData.token+" "+LoginStaticData.userId);
+        GetSPData getSPData=new GetSPData();
+        String token=getSPData.getSPToken(MainActivity.this);
+        String userId=getSPData.getSPUserID(MainActivity.this);
+        String telephone=getSPData.getSPTelephone(MainActivity.this);
+        //验证,从sharedpreferences获取数据
+        //验证,从静态变量获取数据
+        Log.i(TAG, "isLogin: 登录验证sp "+token+" "+userId+" "+telephone);
+        if (LoginStaticData.token.equals(token)&&LoginStaticData.userId.equals(userId)&LoginStaticData.telephone.equals(telephone)){
+            //静态数据正确
+        }else{
+            //静态变量赋值
+            if (token!=null&&userId!=null&telephone!=null){
+                LoginStaticData.token=token;
+                LoginStaticData.userId=userId;
+                LoginStaticData.telephone=telephone;
+            }
+            //验证一下静态信息
+            Log.i(TAG, "isLogin: 登录验证静态数据(主页): "+LoginStaticData.token+" "+LoginStaticData.userId+" "+telephone);
         }
         if (token==null){
             //本地没有token,这里有第一个跳转
@@ -376,6 +379,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                             DataSaveSP dataSaveSP=new DataSaveSP();
                             boolean b=dataSaveSP.dataSave(userId,MainActivity.this);
                             Log.i(TAG, "onResponse: userId覆盖结果"+b);
+                            LoginStaticData.userId=userId;
                         }
                         Log.i(TAG, "onResponse2: token验证通过");
                     }
@@ -418,6 +422,11 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             }
         }).start();
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override
