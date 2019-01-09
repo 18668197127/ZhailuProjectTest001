@@ -18,6 +18,7 @@ import com.example.administrator.zhailuprojecttest001.GlideApp;
 import com.example.administrator.zhailuprojecttest001.MainActivity;
 import com.example.administrator.zhailuprojecttest001.R;
 import com.example.administrator.zhailuprojecttest001.dialog.OpenPhoneDialog;
+
 import com.example.administrator.zhailuprojecttest001.gsonData6.Result6;
 import com.example.administrator.zhailuprojecttest001.register.ChangePwActivity;
 import com.example.administrator.zhailuprojecttest001.retrofit.Data7UserCenter;
@@ -38,11 +39,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+
 public class UserCenterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "UserCenterActivity";
     private String responseString;
     private Result6 result6;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

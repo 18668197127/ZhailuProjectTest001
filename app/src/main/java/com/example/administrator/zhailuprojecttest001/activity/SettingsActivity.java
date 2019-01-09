@@ -40,10 +40,12 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         buttonQuit.setOnClickListener(this);
         LinearLayout llChangePw=findViewById(R.id.ll_settings_list_1);
         llChangePw.setOnClickListener(this);
+
         LinearLayout llChangePhone=findViewById(R.id.ll_settings_list_2);
         llChangePhone.setOnClickListener(this);
         LinearLayout llAbout=findViewById(R.id.ll_settings_list_5);
         llAbout.setOnClickListener(this);
+
     }
 
     @Override
@@ -61,6 +63,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             case R.id.ll_settings_list_1:
                 Intent intent2=new Intent(SettingsActivity.this,ChangePwActivity.class);
                 startActivity(intent2);
+
                 break;
             case R.id.ll_settings_list_2:
                 Intent intent3=new Intent(SettingsActivity.this,ChangePhoneActivity.class);
@@ -69,6 +72,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             case R.id.ll_settings_list_5:
                 Intent intent4=new Intent(SettingsActivity.this,ZhaiLuAboutActivity.class);
                 startActivity(intent4);
+
                 break;
         }
     }
