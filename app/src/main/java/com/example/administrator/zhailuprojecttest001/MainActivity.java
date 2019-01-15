@@ -1,5 +1,6 @@
 package com.example.administrator.zhailuprojecttest001;
 
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -85,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         mInflater = LayoutInflater.from(this);
         mainLayout=findViewById(R.id.main_a_layout);
         pointLl=findViewById(R.id.main_a_point_ll);
-
 
 
         initActivityBDataList();
@@ -214,7 +214,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 int s3=data.getNotices().size();
                 //这里更新category数据
                 for (int i=0;i<4;i++){
-                    Log.i(TAG, "run: "+getResources().getIdentifier("main_a_item_imagebutton_"+(i+1), "id", getPackageName()));
                     TextView t1=findViewById(getResources().getIdentifier("main_a_item_imagebutton_"+(i+1), "id", getPackageName())
                             ).findViewById(R.id.item_textview_a_01);
                     t1.setText(data.getCategories().get(i).getCate_name());

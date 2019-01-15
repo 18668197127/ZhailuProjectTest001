@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.PersonalActivity">
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/layout_personal_title"
@@ -22,10 +21,11 @@
         <LinearLayout
             android:id="@+id/ll_settings_list_0"
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="160dp"
             android:layout_height="80dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circle_image_avatar"
                 android:src="@drawable/test_picture_001"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="17dp"
@@ -64,6 +64,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/text_nickname_personal"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="18dp"
                 android:layout_width="wrap_content"
@@ -96,9 +97,11 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:gravity="right"
+                android:id="@+id/text_sex"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="260dp"
+                android:layout_marginLeft="240dp"
                 android:layout_marginTop="18sp"
                 android:textColor="#000000"
                 android:textSize="14sp"
@@ -133,9 +136,11 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:gravity="right"
+                android:id="@+id/text_age_personal"
+                android:layout_width="21dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="260dp"
+                android:layout_marginLeft="246dp"
                 android:layout_marginTop="18sp"
                 android:textColor="#000000"
                 android:textSize="14sp"
@@ -172,9 +177,13 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:gravity="right"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:id="@+id/text_school_personal"
+                android:layout_width="176dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="158dp"
+                android:layout_marginLeft="70dp"
                 android:layout_marginTop="18sp"
                 android:textColor="#000000"
                 android:textSize="14sp"

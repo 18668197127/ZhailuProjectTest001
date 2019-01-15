@@ -1,4 +1,4 @@
-package com.example.administrator.zhailuprojecttest001.gsonData6;
+package com.example.administrator.zhailuprojecttest001.gsonData6_7;
 
 public class Result6 {
     private String id;

@@ -43,4 +43,21 @@ public class FormatVf {
         return isMatch;
     }
 
+    public boolean isNickName(String vf){
+        String regex="^[a-zA-Z0-9\\u4E00-\\u9FA5]{0,12}$";
+        Pattern p=Pattern.compile(regex);
+        Matcher m=p.matcher(vf);
+        boolean isMatch=m.matches();
+        Log.i(TAG, "isVf: 是否昵称正则匹配"+isMatch);
+        return isMatch;
+    }
+    public boolean isSchoolName(String vf){
+        String regex="^[a-zA-Z0-9\\u4E00-\\u9FA5]{0,20}$";
+        Pattern p=Pattern.compile(regex);
+        Matcher m=p.matcher(vf);
+        boolean isMatch=m.matches();
+        Log.i(TAG, "isVf: 是否学校名正则匹配"+isMatch);
+        return isMatch;
+    }
+
 }

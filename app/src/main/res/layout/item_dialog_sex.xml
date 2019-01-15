@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="210dp"
+    android:layout_height="182dp" android:background="#ffffff">
+
+    <RadioButton
+        android:id="@+id/radiobutton_sex_1"
+        android:buttonTint="#4551C0"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff"
+        android:layout_gravity="center"
+        android:gravity="end|center"
+        android:textSize="15sp"
+        android:text="保密"
+        android:layout_width="100dp"
+        android:layout_height="40dp" />
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="1dp"
+        android:background="#EBEBEB"/>
+    <RadioButton
+        android:id="@+id/radiobutton_sex_2"
+        android:buttonTint="#4551C0"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff"
+        android:layout_gravity="center"
+        android:gravity="end|center"
+        android:textSize="15sp"
+        android:text="男\u3000"
+        android:layout_width="100dp"
+        android:layout_height="40dp" />
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="1dp"
+        android:background="#EBEBEB"/>
+    <RadioButton
+        android:id="@+id/radiobutton_sex_3"
+        android:buttonTint="#4551C0"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff"
+        android:layout_gravity="center"
+        android:gravity="end|center"
+        android:textSize="15sp"
+        android:text="女\u3000"
+        android:layout_width="100dp"
+        android:layout_height="40dp" />
+
+</LinearLayout>

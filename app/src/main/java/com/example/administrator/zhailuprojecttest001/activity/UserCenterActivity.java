@@ -1,10 +1,8 @@
 package com.example.administrator.zhailuprojecttest001.activity;
 
-import android.app.Dialog;
+import android.app.Person;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,19 +10,15 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.zhailuprojecttest001.GlideApp;
 import com.example.administrator.zhailuprojecttest001.MainActivity;
 import com.example.administrator.zhailuprojecttest001.R;
 import com.example.administrator.zhailuprojecttest001.dialog.OpenPhoneDialog;
 
-import com.example.administrator.zhailuprojecttest001.gsonData6.Result6;
-import com.example.administrator.zhailuprojecttest001.register.ChangePwActivity;
+import com.example.administrator.zhailuprojecttest001.gsonData6_7.Result6;
 import com.example.administrator.zhailuprojecttest001.retrofit.Data7UserCenter;
-import com.example.administrator.zhailuprojecttest001.retrofit2.Data8ChangePw;
 import com.example.administrator.zhailuprojecttest001.util.GetSPData;
-import com.example.administrator.zhailuprojecttest001.util.LoginQuit;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -186,5 +180,17 @@ public class UserCenterActivity extends AppCompatActivity implements View.OnClic
                 GlideApp.with(UserCenterActivity.this).load(avatar).into(circleImageView);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //如果修改过个人信息则重新网络请求
+        if (PersonalActivity.flagSave==1){
+            String userId=new GetSPData().getSPUserID(UserCenterActivity.this);
+            retrofitV7(userId);
+            //重新置0
+            PersonalActivity.flagSave=0;
+        }
     }
 }
