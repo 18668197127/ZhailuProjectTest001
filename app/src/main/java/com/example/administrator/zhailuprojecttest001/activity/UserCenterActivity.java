@@ -1,8 +1,10 @@
 package com.example.administrator.zhailuprojecttest001.activity;
 
+
 import android.app.Person;
 import android.content.Intent;
 import android.net.Uri;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.zhailuprojecttest001.GlideApp;
 import com.example.administrator.zhailuprojecttest001.MainActivity;
@@ -19,6 +22,7 @@ import com.example.administrator.zhailuprojecttest001.dialog.OpenPhoneDialog;
 import com.example.administrator.zhailuprojecttest001.gsonData6_7.Result6;
 import com.example.administrator.zhailuprojecttest001.retrofit.Data7UserCenter;
 import com.example.administrator.zhailuprojecttest001.util.GetSPData;
+
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -182,6 +186,7 @@ public class UserCenterActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -193,4 +198,5 @@ public class UserCenterActivity extends AppCompatActivity implements View.OnClic
             PersonalActivity.flagSave=0;
         }
     }
+
 }
