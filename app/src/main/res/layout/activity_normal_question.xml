@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingItem.NormalQuestionActivity">
+
+    <include
+        android:id="@+id/layout_settings_title"
+        layout="@layout/title_zhailu_b"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view12"
+        android:layout_width="340dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="12dp"
+        android:background="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_settings_title" />
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="猜您想问"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/view12"
+        app:layout_constraintStart_toStartOf="@+id/view12"
+        app:layout_constraintTop_toTopOf="@+id/view12" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_question_click_1"
+        android:layout_width="340dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/view12"
+        app:layout_constraintStart_toStartOf="@+id/view12"
+        app:layout_constraintTop_toBottomOf="@+id/text_title">
+
+        <TextView
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="1.如何下单"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/image_question_click1"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dp"
+            android:background="@drawable/icon_arrow_right" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="#F3F3F3"
+        android:id="@+id/ll_question_content_1"
+        android:orientation="vertical"
+        android:layout_width="320dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/view12"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/view12"
+        app:layout_constraintTop_toBottomOf="@+id/ll_question_click_1">
+        <TextView
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="9dp"
+            android:textColor="#222222"
+            android:textSize="12sp"
+            android:text="目前宅鹿提供2种下单方式："
+            android:layout_width="307dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="9dp"
+            android:textColor="#616161"
+            android:textSize="11sp"
+            android:text="1.下载手机客户端宅鹿，点击首页“帮我买”“帮我送”下单"
+            android:layout_width="307dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#616161"
+            android:textSize="11sp"
+            android:text="2.微信关注宅鹿小程序，点击“帮我买”“帮我送”下单"
+            android:layout_width="307dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view13"
+        android:layout_width="320dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="#EBEBEB"
+        app:layout_constraintEnd_toEndOf="@+id/view12"
+        app:layout_constraintStart_toStartOf="@+id/view12"
+        app:layout_constraintTop_toBottomOf="@+id/ll_question_content_1" />
+
+    <LinearLayout
+        android:id="@+id/ll_question_click_2"
+        android:layout_width="340dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/view12"
+        app:layout_constraintStart_toStartOf="@+id/view12"
+        app:layout_constraintTop_toBottomOf="@+id/view13">
+
+        <TextView
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="2.订单取消及退款问题"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/image_question_click2"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dp"
+            android:background="@drawable/icon_arrow_right" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_question_content_2"
+        android:layout_width="320dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="10dp"
+        android:background="#F3F3F3"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@+id/view12"
+        app:layout_constraintStart_toStartOf="@+id/view12"
+        app:layout_constraintTop_toBottomOf="@+id/ll_question_click_2">
+        <TextView
+            android:layout_width="308dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/question_content_2"
+            android:textColor="#616161"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view14"
+        android:layout_width="320dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="#EBEBEB"
+        app:layout_constraintEnd_toEndOf="@+id/view12"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/view12"
+        app:layout_constraintTop_toBottomOf="@+id/ll_question_content_2" />
+
+    <LinearLayout
+        android:id="@+id/ll_question_click_3"
+        android:layout_width="340dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/view12"
+        app:layout_constraintStart_toStartOf="@+id/view12"
+        app:layout_constraintTop_toBottomOf="@+id/view14">
+
+        <TextView
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="3.无法准确测量物品的体积和重量怎么办？"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/image_question_click3"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dp"
+            android:background="@drawable/icon_arrow_right" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_question_content_3"
+        android:layout_width="320dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="10dp"
+        android:background="#F3F3F3"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@+id/view12"
+        app:layout_constraintStart_toStartOf="@+id/view12"
+        app:layout_constraintTop_toBottomOf="@+id/ll_question_click_3">
+        <TextView
+            android:layout_width="308dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/question_content_3"
+            android:textColor="#616161"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view15"
+        android:layout_width="320dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="#EBEBEB"
+        app:layout_constraintEnd_toEndOf="@+id/view12"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/view12"
+        app:layout_constraintTop_toBottomOf="@+id/ll_question_content_3" />
+
+</android.support.constraint.ConstraintLayout>

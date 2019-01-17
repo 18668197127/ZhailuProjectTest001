@@ -359,8 +359,17 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
                 try {
                     responseString = response.body().string();
                     Log.i(TAG, "onResponse测试: " + responseString);
-                    Gson gson=new Gson();
-                    result7=gson.fromJson(responseString,Result7.class);
+                    JSONObject jsonObject=new JSONObject(responseString);
+                    String code=jsonObject.getString("code");
+                    String msg=jsonObject.getString("msg");
+                    String data=jsonObject.getString("data");
+                    if ("success".equals(msg)){
+                        //获取数据成功,解析数据
+                        Gson gson=new Gson();
+                        result7=gson.fromJson(data,Result7.class);
+                    }else {
+                        //获取数据失败
+                    }
                     Log.i(TAG, "onResponse: "+result7+" "+(result7==null));
                     if (result7==null){
                         //数据为空
@@ -374,6 +383,8 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
                         changeSchool=result7.getSchool_name();
                     }
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }

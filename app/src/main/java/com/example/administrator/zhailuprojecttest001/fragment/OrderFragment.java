@@ -13,10 +13,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.administrator.zhailuprojecttest001.R;
-import com.example.administrator.zhailuprojecttest001.activity.OrderActivity;
 import com.example.administrator.zhailuprojecttest001.adapter.OrderListAdapter;
-import com.example.administrator.zhailuprojecttest001.gsonData2.Data2;
 import com.example.administrator.zhailuprojecttest001.gsonData2.Result2;
+import com.example.administrator.zhailuprojecttest001.gsonData2.Task2;
 import com.example.administrator.zhailuprojecttest001.retrofit.ZhailuData2;
 import com.example.administrator.zhailuprojecttest001.util.GetSPData;
 import com.google.gson.Gson;
@@ -57,7 +56,7 @@ public class OrderFragment extends Fragment {
     private String mProcessId;
 
     //这个是订单列表的子项数据
-    private List<Data2> data2List=new ArrayList<>();
+    private List<Task2> data2List=new ArrayList<>();
 
     //这个是fragment中网络请求的字符串
     private String responseString="6";
@@ -178,10 +177,10 @@ public class OrderFragment extends Fragment {
                     Log.i(TAG, "onResponse测试: "+responseString);
                     Gson gson=new Gson();
                     Result2 result2=gson.fromJson(responseString,Result2.class);
-                    if (result2.getData().isEmpty()){
+                    if (result2.getData().getTasks().isEmpty()){
                         //数据读取为空或者数据访问异常
                     }else {
-                        Log.i(TAG, "onResponse: 测试:"+result2.getData().get(0).getDelivery_time());
+                        Log.i(TAG, "onResponse: 测试:"+result2.getData().getTasks().get(0).getDelivery_time());
                         initRecyclerData2();
                         initRecycler();
                     }
@@ -202,7 +201,7 @@ public class OrderFragment extends Fragment {
 
         Gson gson=new Gson();
         Result2 result2=gson.fromJson(responseString,Result2.class);
-        List<Data2> getdata2List=result2.getData();
+        List<Task2> getdata2List=result2.getData().getTasks();
 
         //根据不同订单类型加载不同数据
         //前端的progress验证,防止后台数据出错,二次保证显示对应progress的子项

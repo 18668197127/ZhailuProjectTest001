@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.administrator.zhailuprojecttest001.R;
-import com.example.administrator.zhailuprojecttest001.gsonData2.Data2;
+import com.example.administrator.zhailuprojecttest001.gsonData2.Task2;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
     private final Context context;
-    private List<Data2> mData2List;
+    private List<Task2> mData2List;
 
     //第一种布局
     static class OneViewHolder extends RecyclerView.ViewHolder{
@@ -93,7 +93,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
     //有参构造方法
-    public OrderListAdapter(Context context,List<Data2> data2List){
+    public OrderListAdapter(Context context,List<Task2> data2List){
         this.context=context;
         mData2List=data2List;
     }
@@ -124,7 +124,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     //绑定并且初始化控件
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int i) {
-        Data2 result2= mData2List.get(i);
+        Task2 result2= mData2List.get(i);
         if (result2.getProgress().equals("1")){
             Log.i(TAG, "onBindViewHolder: "+"待支付,第"+i+"项");
             if (viewHolder instanceof TwoViewHolder){
@@ -179,21 +179,21 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    public void setList1(TwoViewHolder holder,Data2 data2){
+    public void setList1(TwoViewHolder holder,Task2 data2){
         holder.textId.setText(data2.getOrder_sn());
         holder.textType.setText(data2.getCate_name());
         holder.textPrice.setText(data2.getTask_price());
         holder.textTimescope.setText(data2.getDelivery_time());
         holder.textPaystate.setText("已支付");
     }
-    public void setList2(OneViewHolder holder,Data2 data2){
+    public void setList2(OneViewHolder holder,Task2 data2){
         holder.textId.setText(data2.getOrder_sn());
         holder.textType.setText(data2.getCate_name());
         holder.textPrice.setText(data2.getTask_price());
         holder.textTimescope.setText(data2.getDelivery_time());
         holder.textPaystate.setText("已支付");
     }
-    public void setList3(ThreeViewHolder holder,Data2 data2){
+    public void setList3(ThreeViewHolder holder,Task2 data2){
         holder.textId.setText(data2.getOrder_sn());
         holder.textType.setText(data2.getCate_name());
         holder.textPrice.setText(data2.getTask_price());
@@ -205,7 +205,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.textState.setText("跑腿中...");
         }
     }
-    public void setList4(ThreeViewHolder holder,Data2 data2){
+    public void setList4(ThreeViewHolder holder,Task2 data2){
         holder.textId.setText(data2.getOrder_sn());
         holder.textType.setText(data2.getCate_name());
         holder.textPrice.setText(data2.getTask_price());
@@ -214,7 +214,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         holder.textState.setText("待评价...");
         holder.buttonThree.setText("去评价");
     }
-    public void setList5(ThreeViewHolder holder,Data2 data2){
+    public void setList5(ThreeViewHolder holder,Task2 data2){
         holder.textId.setText(data2.getOrder_sn());
         holder.textType.setText(data2.getCate_name());
         holder.textPrice.setText(data2.getTask_price());
@@ -223,7 +223,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         holder.textState.setText("已完成...");
         holder.buttonThree.setText("删除订单");
     }
-    public void setList6(ThreeViewHolder holder,Data2 data2){
+    public void setList6(ThreeViewHolder holder,Task2 data2){
         holder.textId.setText(data2.getOrder_sn());
         holder.textType.setText(data2.getCate_name());
         holder.textPrice.setText(data2.getTask_price());

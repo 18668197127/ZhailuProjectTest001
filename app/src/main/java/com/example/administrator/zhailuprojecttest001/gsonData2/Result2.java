@@ -5,7 +5,7 @@ import java.util.List;
 public class Result2 {
     private int code;
     private String msg;
-    private List<Data2> data;
+    private Data2 data;
 
     public int getCode() {
         return code;
@@ -23,11 +23,11 @@ public class Result2 {
         this.msg = msg;
     }
 
-    public List<Data2> getData() {
+    public Data2 getData() {
         return data;
     }
 
-    public void setData(List<Data2> data) {
+    public void setData(Data2 data) {
         this.data = data;
     }
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import com.example.administrator.zhailuprojecttest001.util.GetSPData;
 import com.example.administrator.zhailuprojecttest001.walletItem.ConsumeActivity;
 import com.example.administrator.zhailuprojecttest001.walletItem.CouponActivity;
 import com.example.administrator.zhailuprojecttest001.walletItem.RechargeActivity;
+import com.example.administrator.zhailuprojecttest001.walletItem.RechargePayActivity;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -78,6 +80,8 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         textViewConsume.setOnClickListener(this);
         LinearLayout llTitleBack=findViewById(R.id.layout_wallet_title).findViewById(R.id.ll_settings_back);
         llTitleBack.setOnClickListener(this);
+        Button buttonRechargePay=findViewById(R.id.button_recharge_pay);
+        buttonRechargePay.setOnClickListener(this);
     }
 
     @Override
@@ -106,6 +110,10 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.ll_settings_back:
                 finish();
+                break;
+            case R.id.button_recharge_pay:
+                Intent intent6=new Intent(WalletActivity.this,RechargePayActivity.class);
+                startActivity(intent6);
                 break;
         }
     }

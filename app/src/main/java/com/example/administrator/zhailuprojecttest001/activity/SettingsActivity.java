@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.example.administrator.zhailuprojecttest001.MainActivity;
 import com.example.administrator.zhailuprojecttest001.R;
+import com.example.administrator.zhailuprojecttest001.SettingItem.FeedBackActivity;
+import com.example.administrator.zhailuprojecttest001.SettingItem.NormalQuestionActivity;
 import com.example.administrator.zhailuprojecttest001.register.ChangePhoneActivity;
 import com.example.administrator.zhailuprojecttest001.register.ChangePwActivity;
 import com.example.administrator.zhailuprojecttest001.register.SignInActivity;
@@ -44,6 +46,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         llChangePhone.setOnClickListener(this);
         LinearLayout llAbout=findViewById(R.id.ll_settings_list_5);
         llAbout.setOnClickListener(this);
+        LinearLayout llFeedBack=findViewById(R.id.ll_settings_list_4);
+        llFeedBack.setOnClickListener(this);
+        LinearLayout llQuestion=findViewById(R.id.ll_settings_list_3);
+        llQuestion.setOnClickListener(this);
     }
 
     @Override
@@ -69,6 +75,14 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             case R.id.ll_settings_list_5:
                 Intent intent4=new Intent(SettingsActivity.this,ZhaiLuAboutActivity.class);
                 startActivity(intent4);
+                break;
+            case R.id.ll_settings_list_4:
+                Intent intent5=new Intent(SettingsActivity.this,FeedBackActivity.class);
+                startActivity(intent5);
+                break;
+            case R.id.ll_settings_list_3:
+                Intent intent6=new Intent(SettingsActivity.this,NormalQuestionActivity.class);
+                startActivity(intent6);
                 break;
         }
     }

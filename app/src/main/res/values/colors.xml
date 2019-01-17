@@ -6,4 +6,6 @@
     <color name="gray">#D81B60</color>
     <color name="white">#ffffff</color>
     <color name="default_gray">#fffafafa</color>
+    <color name="blue_recharge">#4450BD</color>
+    <color name="black">#000000</color>
 </resources>

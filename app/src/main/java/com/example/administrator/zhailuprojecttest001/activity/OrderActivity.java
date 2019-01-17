@@ -157,12 +157,12 @@ public class OrderActivity extends AppCompatActivity implements OrderFragment.On
                     Log.i(TAG, "onResponse测试: "+responseString);
                     Gson gson=new Gson();
                     result2=gson.fromJson(responseString,Result2.class);
-                    Log.i(TAG, "onResponse: 测试:"+result2.getData().isEmpty());
-                    if (result2.getData().isEmpty()){
+                    Log.i(TAG, "onResponse: 测试:"+result2.getData().getTasks().isEmpty());
+                    if (result2.getData().getTasks().isEmpty()){
                         //这里是数据访问出错
                     }else {
                         //这里是访问数据正常的逻辑
-                        Log.i(TAG, "onResponse: 测试:"+result2.getData().get(0).getDelivery_time());
+                        Log.i(TAG, "onResponse: 测试:"+result2.getData().getTasks().get(0).getDelivery_time());
                     }
 //                            initRecyclerView();
                 } catch (IOException e) {
